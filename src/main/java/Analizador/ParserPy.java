@@ -5,6 +5,7 @@
 package Analizador;
 
 import ModeloLexico.Alfabeto;
+import ModeloLexico.Coolor;
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
 import java.util.ArrayList;
@@ -23,11 +24,15 @@ public class ParserPy {
 
   
   
+   private static ArrayList<Coolor> ListaContenido = new ArrayList<>();
+   
+   
    private static ArrayList<Token> ListaToken = new ArrayList<>();
    private static ArrayList<Token> ListaErrores = new ArrayList<>();
   
     
        StringBuilder temporal = new StringBuilder();
+       StringBuilder temporal2 = new StringBuilder();
     private  int linea;
     private  int columna;
     private  int Posicioncontenido;
@@ -69,12 +74,13 @@ return false;
             
             
             
-      //IgnorarEspacios();  
   
+  //    IgnorarEspacios();  
         //ignorar espacio en blanco 
     temporal = new StringBuilder();
+    //temporal2 = new StringBuilder();
     char CharActual = contenido.charAt(Posicioncontenido);
-  //  Alfabeto alfabeto=null;
+     // Alfabeto alfabeto=null;
   
   
     
@@ -87,25 +93,22 @@ return false;
             
             
         CharActual=contenido.charAt(Posicioncontenido);
-  
-                 
-                   
-                
-                 
-        
-           
-           
-    
-    
+     
+             
     columna++;
     Posicioncontenido++;
+    
     temporal.append(CharActual);
+      // temporal2.append(CharActual);
     
     
     
 
             System.out.println(temporal+"\n\n");
             
+//            System.out.println("temporal 2");
+//            System.out.println(temporal2+"\n\n");
+//            
 
             
              System.out.println(cont);
@@ -135,7 +138,11 @@ return false;
                              
             Token tokencito = new Token(TipoToken.Cadena, linea,columna-temporal.length(),temporal.toString());
             ListaToken.add(tokencito);
+//            Coolor color= new Coolor(temporal2.toString(),"anaranjado");
+//            ListaContenido.add(color);
+//            
             temporal.setLength(0);
+           // temporal2.setLength(0);
             
              cont=0;
                   
@@ -161,9 +168,26 @@ return false;
            
             if(op.equals(temporal.toString())){
                 
-            Token tokencito = new Token(operador.getTipo(), linea,columna-temporal.length(),operador.getSimbolo());
+                Token tokencito = new Token(operador.getTipo(), linea,columna-temporal.length(),operador.getSimbolo());
             ListaToken.add(tokencito);
             temporal.setLength(0);
+            
+//            
+//            String color="";
+//            if(operador.getTipo().equals("Palabra_Reservada")){
+//                color="morado";
+//       
+//            }else{
+//            
+//            color="azul";
+//            }
+//            
+//             Coolor colorcito= new Coolor(temporal2.toString(),color);
+//             ListaContenido.add(colorcito);
+//             
+//            temporal2.setLength(0);
+//        
+//             
             
             }
             
@@ -196,6 +220,13 @@ return false;
             
             return ListaErrores;
         }
+        
+        public ArrayList<Coolor> getColor(){
+        
+            
+            
+            return ListaContenido;
+        }
     
     
     
@@ -208,11 +239,24 @@ return false;
                            Token tokencito = new Token(TipoToken.Identificador, linea,columna-temporal.length(),temporal.toString());
             ListaToken.add(tokencito);
             temporal.setLength(0);
+            
+            
+//              Coolor colorcito= new Coolor(temporal2.toString(),"negro");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//            
                    
                    }else{
                       Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
             ListaErrores.add(tokencito);
             temporal.setLength(0);
+            
+//            Coolor colorcito= new Coolor(temporal2.toString(),"rojo");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//            
                    }
                    
                        
@@ -227,8 +271,10 @@ return false;
         
         while(Posicioncontenido<contenido.length()){
         if(IdenSim.NuevaLinea(contenido.charAt(Posicioncontenido))){
-        Posicioncontenido++;
+          //  temporal2.append(contenido.charAt(Posicioncontenido));
+           
         linea++;
+        Posicioncontenido++;
         columna=0;
         
         
@@ -238,6 +284,13 @@ return false;
                       Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
             ListaErrores.add(tokencito);
             temporal.setLength(0);
+            
+//              Coolor colorcito= new Coolor(temporal2.toString(),"rojo");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//            
+            
             cont=0;
             cont2=0;
             
@@ -252,6 +305,13 @@ return false;
                       Token tokencito = new Token(TipoToken.Comentario, linea,columna,temporal.toString());
             ListaToken.add(tokencito);
             temporal.setLength(0);
+            
+//              Coolor colorcito= new Coolor(temporal2.toString(),"gris");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//            
+            
                  
                  }
                  //meter en metodo
@@ -266,8 +326,12 @@ return false;
                           Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
             ListaErrores.add(tokencito);
             temporal.setLength(0);
-                    
-                
+//            
+//                      Coolor colorcito= new Coolor(temporal2.toString(),"rojo");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//                
                  }
                  }
                  
@@ -275,6 +339,12 @@ return false;
         }
         
         if(IdenSim.EsEspacio(contenido.charAt(Posicioncontenido))){
+               //temporal2.append(contenido.charAt(Posicioncontenido));
+         
+                if(comentario || cadena){
+            temporal.append(contenido.charAt(Posicioncontenido));
+            }
+               
         Posicioncontenido++;
         columna++;
         
@@ -282,6 +352,8 @@ return false;
              
          ClasificaEntDec(temporal.toString());
     VerificarID();
+    
+    
         }
         
         
@@ -303,8 +375,12 @@ return false;
             ListaToken.add(tokencito);
             temporal.setLength(0);
             
-        
-            System.out.println("Es Entero");
+//          Coolor colorcito= new Coolor(temporal2.toString(),"anaranjado");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//            
+            //System.out.println("Es Entero");
         
         }
         
@@ -313,8 +389,13 @@ return false;
                Token tokencito = new Token(TipoToken.Decimal, linea,columna,temporal.toString());
             ListaToken.add(tokencito);
             temporal.setLength(0);
-            
-            System.out.println("Es Decimal");
+//            
+//              Coolor colorcito= new Coolor(temporal2.toString(),"anaranjado");
+//             ListaContenido.add(colorcito);
+//        
+//            temporal2.setLength(0);
+//            
+         //   System.out.println("Es Decimal");
             
      
             

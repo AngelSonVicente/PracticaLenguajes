@@ -6,11 +6,20 @@ package Ventanas;
 
 import Analizador.ParserPy;
 import ModeloLexico.Token;
+import ModeloLexico.Coolor;
+import ModeloLexico.TipoToken;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 /*
 import AnalizadorLexico.IdentSimbolo;
@@ -55,6 +64,8 @@ public class Principal extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaReporte = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        contenido2 = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -107,6 +118,8 @@ public class Principal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(TablaReporte);
 
+        jScrollPane4.setViewportView(contenido2);
+
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
 
@@ -123,8 +136,7 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -136,8 +148,10 @@ public class Principal extends javax.swing.JFrame {
                                     .addComponent(Correr))
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,18 +160,17 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Correr, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(93, 93, 93))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57))
         );
 
         pack();
@@ -170,7 +183,7 @@ public class Principal extends javax.swing.JFrame {
     
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
-        
+        int linea=0;
         
          Map<String, Color> styleMap = new HashMap<>();
         styleMap.put("rojo", Color.RED);
@@ -184,6 +197,7 @@ public class Principal extends javax.swing.JFrame {
         
         String Contenido=contenido.getText();
 
+        System.out.println(Contenido);
 
   
 
@@ -194,27 +208,81 @@ public class Principal extends javax.swing.JFrame {
         String imprimir ="";
         
    ArrayList<Token> ListaToken = analizador.getToken();
+   ArrayList<Coolor> ListaColor = analizador.getColor();
+   
+   
    
    
    ArrayList<Token> ListaErrores = analizador.getErrores();
-      
+                 StyledDocument doc = contenido2.getStyledDocument();
+        Style estilo = doc.addStyle("ColorStyle", null);
+   
         for(Token tokens: ListaToken){
             if(tokens.getLexeman().equals("")){
             
             }else{
-                
-                
+                 //   contenidonuevo=contenidonuevo+ colores.getContenido();
+                // StyledDocument doc = contenido2.getStyledDocument();
+//            Style estilo = doc.addStyle(tokens.getLexeman(),null);
+//                StyleConstants.setForeground(estilo,Color.RED);    
+//                
             model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
             
-            contenido.setText("");
+       // StyleConstants.setForeground(estilo, Color.MAGENTA);
+                 
+        
+        if(tokens.getTipotoken()==TipoToken.Identificador){
+        
+        StyleConstants.setForeground(estilo, Color.BLACK);
+        }
+        if(tokens.getTipotoken()==TipoToken.Palabra_Reservada){
+        StyleConstants.setForeground(estilo, Color.MAGENTA);
+      
+        
+        }
+        if(tokens.getTipotoken()==TipoToken.Operador_Aritmetico||tokens.getTipotoken()==TipoToken.Operador_Comparacion || 
+                tokens.getTipotoken()==TipoToken.Operador_Logico || tokens.getTipotoken()==TipoToken.Operador_Comparacion ){
+        
+        StyleConstants.setForeground(estilo, Color.BLUE);
+        }
+        if(tokens.getTipotoken()==TipoToken.Cadena||tokens.getTipotoken()==TipoToken.Entero|| 
+                tokens.getTipotoken()==TipoToken.Decimal ){
+        
+        StyleConstants.setForeground(estilo, Color.ORANGE);
+        }
+        if( tokens.getTipotoken()==TipoToken.Coma||
+                     tokens.getTipotoken()==TipoToken.PuntoComa || tokens.getTipotoken()==TipoToken.DosPuntos||
+                     tokens.getTipotoken()==TipoToken.Llaves || tokens.getTipotoken()==TipoToken.Parentesis
+                || tokens.getTipotoken()==TipoToken.Corchetes){
+        
+        StyleConstants.setForeground(estilo, Color.GREEN);
+        }
+        if( tokens.getTipotoken()==TipoToken.Comentario){
+        
+        StyleConstants.setForeground(estilo, Color.GRAY);
+        }
+        String Espacio=" ";
+        if(linea!=tokens.getLinea()){
+        Espacio="\n";
+        }
+                 try {
+            doc.insertString(doc.getLength(), Espacio+tokens.getLexeman()+" ", estilo);
             
+            
+            
+        } catch (BadLocationException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                 
+                 linea=tokens.getLinea();
+
+ 
             
             
             
             
             }
-            
-            
+     
         
         
         }
@@ -222,37 +290,15 @@ public class Principal extends javax.swing.JFrame {
             
             
             
+            errores.setText(imprimir);
         
             imprimir=imprimir+"\n "+ tokenerror.toString(); 
         }
-            errores.setText(imprimir);
         
         
         
-        /*
-         ArrayList<Token> Listar = new ArrayList<>();
-
-        ParserPy  analizador = new ParserPy(); 
-    Token tokenn=new Token();
-    Token token2=new Token();
-        
-        analizador.LeerArchivo(Contenido);
-        
-       do{
-       Listar.add(analizador.getToken());
-       
-       
-       }while(analizador.FinalArchio()); 
-       
-
-        //errores.setText(String.valueOf(token.getColumna()));
-       
-        for(Token token: Listar){
-        
-        errores.setText(token.toString()+ "\n");
-        }
-       */ 
-   // errores.setText(token.toString);
+              
+    
         
        
     }//GEN-LAST:event_CorrerActionPerformed
@@ -297,6 +343,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton Correr;
     private javax.swing.JTable TablaReporte;
     private javax.swing.JTextArea contenido;
+    private javax.swing.JTextPane contenido2;
     private javax.swing.JTextArea errores;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
@@ -309,5 +356,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
+
+    private void appendColoredText(JTextArea contenido, String este_es_un_texto_, Object object) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

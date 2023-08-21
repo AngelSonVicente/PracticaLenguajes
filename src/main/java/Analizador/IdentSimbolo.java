@@ -24,10 +24,10 @@ class IdentSimbolo {
     try {
         Integer.parseInt(numero);
         
-        System.out.println("Es entero");
+       // System.out.println("Es entero");
         return true;
     } catch (NumberFormatException e) {
-        System.out.println("NO entero");
+       // System.out.println("NO entero");
         return false;
     }
     
@@ -41,10 +41,10 @@ class IdentSimbolo {
     try {
         Double.parseDouble(numero);
         
-        System.out.println("es decimal");
+      //  System.out.println("es decimal");
         return true;
     } catch (NumberFormatException e) {
-        System.out.println("No es decimal");
+      //  System.out.println("No es decimal");
         return false;
     }
 }

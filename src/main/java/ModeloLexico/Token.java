@@ -16,7 +16,7 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token{" + "tipotoken=" + tipotoken + ", linea=" + linea + ", columna=" + columna + ", Lexeman=" + Lexeman + '}';
+        return "Token{" + "tipotoken=" + tipotoken + ", linea=" + linea + ", columna=" + columna + ", Lexema=" + Lexeman + '}';
     }
 
     
