@@ -11,4 +11,31 @@
         <maven.compiler.target>16</maven.compiler.target>
         <exec.mainClass>com.mycompany.practicalenguajes.PracticaLenguajes</exec.mainClass>
     </properties>
+    
+    
+    <dependencies>
+        
+        <dependency>
+    <groupId>guru.nidi</groupId>
+    <artifactId>graphviz-java</artifactId>
+    <version>0.18.1</version>
+</dependency>
+        
+       
+    
+    <dependency>
+    <groupId>net.sf.jung</groupId>
+    <artifactId>jung-api</artifactId>
+    <version>2.1.1</version> <!-- Reemplaza con la última versión disponible -->
+      <type>jar</type>
+    </dependency>
+        
+        <dependency>
+    <groupId>ch.qos.logback</groupId>
+    <artifactId>logback-classic</artifactId>
+    <version>1.2.3</version>
+</dependency>
+        
+    </dependencies>
+    
 </project>

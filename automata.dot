@@ -1,0 +1,18 @@
+digraph G {  
+ 	rankdir=LR;
+  0 [label="A", shape=circle, width=0.15];
+  1 [label="n", shape=circle, width=0.15];
+  2 [label="i", shape=circle, width=0.15];
+  3 [label="t", shape=circle, width=0.15];
+  4 [label="a", shape=circle, width=0.15];
+  5 [label=" ", shape=circle, width=0.15];
+  6 [label="<", shape=circle, width=0.15];
+  7 [label="3", shape=doublecircle,width=0.15];
+  0 -> 1;
+  1 -> 2;
+  2 -> 3;
+  3 -> 4;
+  4 -> 5;
+  5 -> 6;
+  6 -> 7;
+}
