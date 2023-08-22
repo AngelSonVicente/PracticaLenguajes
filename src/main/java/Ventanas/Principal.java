@@ -209,22 +209,13 @@ public class Principal extends javax.swing.JFrame {
     DefaultTableModel model;
     
     ArrayList<Token> ListaToken ;
+    ArrayList<Token> ListaGeneral ;
    
     
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
         int linea=0;
-        
-         Map<String, Color> styleMap = new HashMap<>();
-        styleMap.put("rojo", Color.RED);
-        styleMap.put("azul", Color.BLUE);
-        styleMap.put("naranja", Color.orange);
-        styleMap.put("gris", Color.GRAY);
-        styleMap.put("verde", Color.GREEN);
-        styleMap.put("morado", Color.MAGENTA);
-        styleMap.put("negro", Color.BLACK);
-        
-        
+
         String Contenido=contenido.getText();
 
         System.out.println(Contenido);
@@ -237,6 +228,7 @@ public class Principal extends javax.swing.JFrame {
         
         String imprimir ="";
        ListaToken = analizador.getToken();
+       ListaGeneral = analizador.getTokensGenerales();
    
    ArrayList<Coolor> ListaColor = analizador.getColor();
    
@@ -253,6 +245,71 @@ public class Principal extends javax.swing.JFrame {
             }else{
              
             model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
+            
+                        
+        
+//        if(tokens.getTipotoken()==TipoToken.Identificador){
+//        
+//        StyleConstants.setForeground(estilo, Color.BLACK);
+//        }
+//        if(tokens.getTipotoken()==TipoToken.Palabra_Reservada){
+//        StyleConstants.setForeground(estilo, Color.MAGENTA);
+//      
+//        
+//        }
+//        if(tokens.getTipotoken()==TipoToken.Operador_Aritmetico||tokens.getTipotoken()==TipoToken.Operador_Comparacion || 
+//                tokens.getTipotoken()==TipoToken.Operador_Logico || tokens.getTipotoken()==TipoToken.Operador_Comparacion ){
+//        
+//        StyleConstants.setForeground(estilo, Color.BLUE);
+//        }
+//        if(tokens.getTipotoken()==TipoToken.Cadena||tokens.getTipotoken()==TipoToken.Entero|| 
+//                tokens.getTipotoken()==TipoToken.Decimal ){
+//        
+//        StyleConstants.setForeground(estilo, Color.ORANGE);
+//        }
+//        if( tokens.getTipotoken()==TipoToken.Coma||
+//                     tokens.getTipotoken()==TipoToken.PuntoComa || tokens.getTipotoken()==TipoToken.DosPuntos||
+//                     tokens.getTipotoken()==TipoToken.Llaves || tokens.getTipotoken()==TipoToken.Parentesis
+//                || tokens.getTipotoken()==TipoToken.Corchetes){
+//        
+//        StyleConstants.setForeground(estilo, Color.GREEN);
+//        }
+//        if( tokens.getTipotoken()==TipoToken.Comentario){
+//        
+//        StyleConstants.setForeground(estilo, Color.GRAY);
+//        }
+//        String Espacio=" ";
+//        if(linea!=tokens.getLinea()){
+//        Espacio="\n";
+//        }
+//                 try {
+//            doc.insertString(doc.getLength(), Espacio+tokens.getLexeman()+" ", estilo);
+//            
+//            
+//            
+//        } catch (BadLocationException ex) {
+//            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//                 
+//                 linea=tokens.getLinea();
+
+ 
+            
+            
+            
+            
+            }
+     
+        
+        
+        }
+   
+        for(Token tokens: ListaGeneral){
+            if(tokens.getLexeman().equals("")){
+            
+            }else{
+             
+            //model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
             
                         
         
@@ -286,12 +343,13 @@ public class Principal extends javax.swing.JFrame {
         
         StyleConstants.setForeground(estilo, Color.GRAY);
         }
-        String Espacio=" ";
-        if(linea!=tokens.getLinea()){
-        Espacio="\n";
+        if( tokens.getTipotoken()==TipoToken.Error){
+        
+        StyleConstants.setForeground(estilo, Color.RED);
         }
+    
                  try {
-            doc.insertString(doc.getLength(), Espacio+tokens.getLexeman()+" ", estilo);
+            doc.insertString(doc.getLength(), tokens.getLexeman(), estilo);
             
             
             

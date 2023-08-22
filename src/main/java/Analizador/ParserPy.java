@@ -28,6 +28,7 @@ public class ParserPy {
    
    
    private static ArrayList<Token> ListaToken = new ArrayList<>();
+   private static ArrayList<Token> ListaGeneral = new ArrayList<>();
    private static ArrayList<Token> ListaErrores = new ArrayList<>();
   
     
@@ -78,6 +79,7 @@ return false;
   //    IgnorarEspacios();  
         //ignorar espacio en blanco 
     temporal = new StringBuilder();
+    temporal2 = new StringBuilder();
     //temporal2 = new StringBuilder();
     char CharActual = contenido.charAt(Posicioncontenido);
      // Alfabeto alfabeto=null;
@@ -99,6 +101,7 @@ return false;
     Posicioncontenido++;
     
     temporal.append(CharActual);
+    temporal2.append(CharActual);
       // temporal2.append(CharActual);
     
     
@@ -138,11 +141,17 @@ return false;
                      cadena=false;
                          // System.out.println("ya cerrooooooooo");
             Token tokencito = new Token(TipoToken.Cadena, linea,columna-temporal.length(),temporal.toString());
+            Token tokencito2 = new Token(TipoToken.Cadena, linea,columna-temporal2.length(),temporal2.toString());
+            
+            
             ListaToken.add(tokencito);
+            ListaGeneral.add(tokencito2);
+            
 //            Coolor color= new Coolor(temporal2.toString(),"anaranjado");
 //            ListaContenido.add(color);
 //            
             temporal.setLength(0);
+            temporal2.setLength(0);
            // temporal2.setLength(0);
             
              cont=0;
@@ -170,8 +179,11 @@ return false;
             if(op.equals(temporal.toString())){
                 
                 Token tokencito = new Token(operador.getTipo(), linea,columna-temporal.length(),operador.getSimbolo());
+                Token tokencito2 = new Token(operador.getTipo(), linea,columna-temporal2.length(),temporal2.toString());
             ListaToken.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
               
             
             }
@@ -205,6 +217,12 @@ return false;
             
             return ListaErrores;
         }
+        public ArrayList<Token> getTokensGenerales(){
+        
+            
+            
+            return ListaGeneral;
+        }
         
         public ArrayList<Coolor> getColor(){
         
@@ -222,8 +240,11 @@ return false;
                    
                    if(alfabeto.EsIdentificador(temporal.toString().charAt(0))){
                            Token tokencito = new Token(TipoToken.Identificador, linea,columna,temporal.toString());
+                           Token tokencito2 = new Token(TipoToken.Identificador, linea,columna,temporal2.toString());
             ListaToken.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
             
             
 //              Coolor colorcito= new Coolor(temporal2.toString(),"negro");
@@ -233,9 +254,12 @@ return false;
 //            
                    
                    }else{
-                      Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
+                      Token tokencito = new Token(TipoToken.Error, linea,columna,temporal.toString());
+                      Token tokencito2 = new Token(TipoToken.Error, linea,columna-temporal2.length(),temporal2.toString());
             ListaErrores.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
             
 //            Coolor colorcito= new Coolor(temporal2.toString(),"rojo");
 //             ListaContenido.add(colorcito);
@@ -256,7 +280,7 @@ return false;
         
         while(Posicioncontenido<contenido.length()){
         if(IdenSim.NuevaLinea(contenido.charAt(Posicioncontenido))){
-          //  temporal2.append(contenido.charAt(Posicioncontenido));
+            temporal2.append('\n');
            
         linea++;
         Posicioncontenido++;
@@ -266,11 +290,14 @@ return false;
         
                  if(cont==1 && cont2!=linea){
            
-                      Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
+                      Token tokencito = new Token(TipoToken.Error, linea,columna,temporal.toString());
+                      Token tokencito2 = new Token(TipoToken.Error, linea,columna-temporal2.length(),temporal2.toString());
             ListaErrores.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
         
-            
+            cadena=false;
             cont=0;
             cont2=0;
             
@@ -283,9 +310,13 @@ return false;
                  if(comentario){
                      
                       Token tokencito = new Token(TipoToken.Comentario, linea,columna,temporal.toString());
+                      Token tokencito2 = new Token(TipoToken.Comentario, linea,columna,temporal2.toString());
             ListaToken.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
             
+            comentario=false;
 //              Coolor colorcito= new Coolor(temporal2.toString(),"gris");
 //             ListaContenido.add(colorcito);
 //        
@@ -303,9 +334,12 @@ return false;
                  if(!temporal.isEmpty()){
                      
                       
-                          Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
+                          Token tokencito = new Token(TipoToken.Error, linea,columna,temporal.toString());
+                          Token tokencito2 = new Token(TipoToken.Error, linea,columna-temporal2.length(),temporal2.toString());
             ListaErrores.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
 //            
 //                      Coolor colorcito= new Coolor(temporal2.toString(),"rojo");
 //             ListaContenido.add(colorcito);
@@ -319,12 +353,11 @@ return false;
         }
         
         if(IdenSim.EsEspacio(contenido.charAt(Posicioncontenido))){
-               //temporal2.append(contenido.charAt(Posicioncontenido));
+            temporal2.append(contenido.charAt(Posicioncontenido));
          
                 if(comentario || cadena){
             temporal.append(contenido.charAt(Posicioncontenido));
-            }
-               
+            }            
         Posicioncontenido++;
         columna++;
         
@@ -352,8 +385,11 @@ return false;
         if(IdenSim.esNumeroEntero(numero)){
             
                Token tokencito = new Token(TipoToken.Entero, linea,columna,temporal.toString());
+               Token tokencito2 = new Token(TipoToken.Entero, linea,columna,temporal2.toString());
             ListaToken.add(tokencito);
+            ListaGeneral.add(tokencito);
             temporal.setLength(0);
+            temporal2.setLength(0);
             
 //          Coolor colorcito= new Coolor(temporal2.toString(),"anaranjado");
 //             ListaContenido.add(colorcito);
@@ -367,8 +403,11 @@ return false;
         if(IdenSim.esNumeroDecimal(numero)){
         
                Token tokencito = new Token(TipoToken.Decimal, linea,columna,temporal.toString());
+               Token tokencito2 = new Token(TipoToken.Decimal, linea,columna,temporal2.toString());
             ListaToken.add(tokencito);
+            ListaGeneral.add(tokencito2);
             temporal.setLength(0);
+            temporal2.setLength(0);
 //            
 //              Coolor colorcito= new Coolor(temporal2.toString(),"anaranjado");
 //             ListaContenido.add(colorcito);
