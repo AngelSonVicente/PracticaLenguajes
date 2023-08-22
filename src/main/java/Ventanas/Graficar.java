@@ -25,20 +25,13 @@ public class Graficar extends javax.swing.JFrame {
         
         ListaToken =Datos;
         initComponents();
-        CargarSelect();
-        refrescarGrafica();
-     
-        
-    }
-    
-    
-    public void refrescarGrafica(){
-            ImageIcon imageIcon = new ImageIcon("src/main/java/Imagenes/automata.png"); // Reemplaza con la ruta de tu imagen
-              
+          CargarSelect();
+      
+           ImageIcon imageIcon = new ImageIcon("src/main/java/Imagenes/automata.png"); // Reemplaza con la ruta de tu imagen
         grafiquita.setIcon(imageIcon);
-        
-    
     }
+    
+
     public Graficar() {
         
       initComponents();
@@ -245,12 +238,11 @@ public class Graficar extends javax.swing.JFrame {
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
   
-if(cont!=1){
+
 
 grafica.GenerarGrafico(selectedValue);
 
-        refrescarGrafica();
-}//prueba.setText(selectedValue);
+        //refrescarGrafica();/prueba.setText(selectedValue);
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
@@ -265,11 +257,10 @@ grafica.GenerarGrafico(selectedValue);
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
    
-if(cont!=1){
 
 grafica.GenerarGrafico(selectedValue);
-        refrescarGrafica();
-}
+       // refrescarGrafica();
+
    // prueba.setText(selectedValue);
     
 } else {
@@ -292,7 +283,7 @@ if(cont!=1){
 
 grafica.GenerarGrafico(selectedValue);
 
-        refrescarGrafica();
+       // refrescarGrafica();
 }
     //prueba.setText(selectedValue);
     
@@ -317,7 +308,7 @@ if(cont!=1){
 
 grafica.GenerarGrafico(selectedValue);
 
-        refrescarGrafica();
+       // refrescarGrafica();
 }
     
 } else {
@@ -338,7 +329,7 @@ grafica.GenerarGrafico(selectedValue);
     
   grafica.GenerarGrafico(selectedValue);
     
-        refrescarGrafica();
+       // refrescarGrafica();
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
