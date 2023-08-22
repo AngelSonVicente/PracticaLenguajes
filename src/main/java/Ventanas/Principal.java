@@ -54,6 +54,10 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         contenido = new javax.swing.JTextArea();
         Correr = new javax.swing.JButton();
@@ -67,12 +71,20 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         contenido2 = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
         jMenuItem1.setText("jMenuItem1");
+
+        jMenu4.setText("jMenu4");
+
+        jMenu1.setText("jMenu1");
+
+        jMenuItem2.setText("jMenuItem2");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,11 +132,22 @@ public class Principal extends javax.swing.JFrame {
 
         jScrollPane4.setViewportView(contenido2);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        jMenu6.setText("Graficas");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        jMenuItem4.setText("Graficar Tokens");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
 
@@ -179,7 +202,8 @@ public class Principal extends javax.swing.JFrame {
     
     DefaultTableModel model;
     
-    
+    ArrayList<Token> ListaToken ;
+   
     
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
@@ -206,8 +230,8 @@ public class Principal extends javax.swing.JFrame {
         analizador.LeerArchivo(Contenido);
         
         String imprimir ="";
-        
-   ArrayList<Token> ListaToken = analizador.getToken();
+       ListaToken = analizador.getToken();
+   
    ArrayList<Coolor> ListaColor = analizador.getColor();
    
    
@@ -221,15 +245,10 @@ public class Principal extends javax.swing.JFrame {
             if(tokens.getLexeman().equals("")){
             
             }else{
-                 //   contenidonuevo=contenidonuevo+ colores.getContenido();
-                // StyledDocument doc = contenido2.getStyledDocument();
-//            Style estilo = doc.addStyle(tokens.getLexeman(),null);
-//                StyleConstants.setForeground(estilo,Color.RED);    
-//                
+             
             model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
             
-       // StyleConstants.setForeground(estilo, Color.MAGENTA);
-                 
+                        
         
         if(tokens.getTipotoken()==TipoToken.Identificador){
         
@@ -286,15 +305,18 @@ public class Principal extends javax.swing.JFrame {
         
         
         }
+        
         for(Token tokenerror: ListaErrores){
             
             
             
-            errores.setText(imprimir);
         
             imprimir=imprimir+"\n "+ tokenerror.toString(); 
+            
+            System.out.println(tokenerror.toString());
         }
         
+            errores.setText(imprimir);
         
         
               
@@ -302,6 +324,23 @@ public class Principal extends javax.swing.JFrame {
         
        
     }//GEN-LAST:event_CorrerActionPerformed
+
+         
+         
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        // TODO add your handling code here:
+        
+         Graficar graficar = new Graficar(ListaToken);
+        graficar.setVisible(true);
+       
+        
+    }//GEN-LAST:event_jMenu6ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    Graficar graficar = new Graficar(ListaToken);
+        graficar.setVisible(true);
+     
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,10 +388,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

@@ -133,9 +133,10 @@ return false;
                  cont++;
                  cont2=linea;
                  cadena=true;
+                 
                  if(cont==2){
                      cadena=false;
-                             
+                         // System.out.println("ya cerrooooooooo");
             Token tokencito = new Token(TipoToken.Cadena, linea,columna-temporal.length(),temporal.toString());
             ListaToken.add(tokencito);
 //            Coolor color= new Coolor(temporal2.toString(),"anaranjado");
@@ -171,23 +172,7 @@ return false;
                 Token tokencito = new Token(operador.getTipo(), linea,columna-temporal.length(),operador.getSimbolo());
             ListaToken.add(tokencito);
             temporal.setLength(0);
-            
-//            
-//            String color="";
-//            if(operador.getTipo().equals("Palabra_Reservada")){
-//                color="morado";
-//       
-//            }else{
-//            
-//            color="azul";
-//            }
-//            
-//             Coolor colorcito= new Coolor(temporal2.toString(),color);
-//             ListaContenido.add(colorcito);
-//             
-//            temporal2.setLength(0);
-//        
-//             
+              
             
             }
             
@@ -236,7 +221,7 @@ return false;
                      
                    
                    if(alfabeto.EsIdentificador(temporal.toString().charAt(0))){
-                           Token tokencito = new Token(TipoToken.Identificador, linea,columna-temporal.length(),temporal.toString());
+                           Token tokencito = new Token(TipoToken.Identificador, linea,columna,temporal.toString());
             ListaToken.add(tokencito);
             temporal.setLength(0);
             
@@ -280,16 +265,11 @@ return false;
         
         
                  if(cont==1 && cont2!=linea){
-                     
+           
                       Token tokencito = new Token(TipoToken.Error, linea,columna-temporal.length(),temporal.toString());
             ListaErrores.add(tokencito);
             temporal.setLength(0);
-            
-//              Coolor colorcito= new Coolor(temporal2.toString(),"rojo");
-//             ListaContenido.add(colorcito);
-//        
-//            temporal2.setLength(0);
-//            
+        
             
             cont=0;
             cont2=0;
