@@ -4,9 +4,11 @@
  */
 package Ventanas;
 
+import ModeloLexico.GenerarGrafica;
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -18,13 +20,31 @@ public class Graficar extends javax.swing.JFrame {
      * Creates new form Graficar
      */
     ArrayList<Token> ListaToken ;
-    
+    GenerarGrafica grafica = new GenerarGrafica();
     public Graficar(ArrayList<Token>Datos) {
         
         ListaToken =Datos;
         initComponents();
         CargarSelect();
+        refrescarGrafica();
+     
+        
     }
+    
+    
+    public void refrescarGrafica(){
+            ImageIcon imageIcon = new ImageIcon("src/main/java/Imagenes/automata.png"); // Reemplaza con la ruta de tu imagen
+              
+        grafiquita.setIcon(imageIcon);
+        
+    
+    }
+    public Graficar() {
+        
+      initComponents();
+      
+    }
+    int cont=0;
 
     private void  CargarSelect(){
 //                Indentificadores.addItem("Identificadores");
@@ -104,13 +124,12 @@ public class Graficar extends javax.swing.JFrame {
         Logicos = new javax.swing.JComboBox<>();
         Asignacion = new javax.swing.JComboBox<>();
         PalabraReservada = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        prueba = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        grafiquita = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,10 +166,6 @@ public class Graficar extends javax.swing.JFrame {
             }
         });
 
-        prueba.setColumns(20);
-        prueba.setRows(5);
-        jScrollPane1.setViewportView(prueba);
-
         jLabel2.setText("Indentificadores");
 
         jLabel3.setText("Comparacion");
@@ -166,31 +181,30 @@ public class Graficar extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Comparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Indentificadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(Logicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Asignacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(PalabraReservada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addGap(0, 448, Short.MAX_VALUE)))))
-                .addGap(115, 115, 115))
+                                    .addComponent(Indentificadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGap(43, 43, 43)
+                                .addComponent(jLabel1))
+                            .addComponent(Asignacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PalabraReservada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Comparacion, 0, 146, Short.MAX_VALUE)
+                            .addComponent(jLabel4)
+                            .addComponent(Logicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(298, 298, 298)
+                        .addComponent(grafiquita)
+                        .addGap(1350, 1350, 1350))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,27 +214,26 @@ public class Graficar extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(Indentificadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Comparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Logicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Asignacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PalabraReservada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addComponent(Indentificadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Comparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Logicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(grafiquita))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Asignacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(PalabraReservada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(338, Short.MAX_VALUE))
         );
 
         pack();
@@ -231,8 +244,13 @@ public class Graficar extends javax.swing.JFrame {
         if (selectedItem != null) {
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
-    
-    prueba.setText(selectedValue);
+  
+if(cont!=1){
+
+grafica.GenerarGrafico(selectedValue);
+
+        refrescarGrafica();
+}//prueba.setText(selectedValue);
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
@@ -246,8 +264,13 @@ public class Graficar extends javax.swing.JFrame {
                 if (selectedItem != null) {
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
-    
-    prueba.setText(selectedValue);
+   
+if(cont!=1){
+
+grafica.GenerarGrafico(selectedValue);
+        refrescarGrafica();
+}
+   // prueba.setText(selectedValue);
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
@@ -264,8 +287,14 @@ public class Graficar extends javax.swing.JFrame {
                 if (selectedItem != null) {
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
-    
-    prueba.setText(selectedValue);
+
+if(cont!=1){
+
+grafica.GenerarGrafico(selectedValue);
+
+        refrescarGrafica();
+}
+    //prueba.setText(selectedValue);
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
@@ -274,15 +303,22 @@ public class Graficar extends javax.swing.JFrame {
 
     }//GEN-LAST:event_PalabraReservadaActionPerformed
 
-    private void ComparacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComparacionActionPerformed
 
+    private void ComparacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComparacionActionPerformed
+cont++;
  Object selectedItem = Comparacion.getSelectedItem();
   
                 if (selectedItem != null) {
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
     
-    prueba.setText(selectedValue);
+
+if(cont!=1){
+
+grafica.GenerarGrafico(selectedValue);
+
+        refrescarGrafica();
+}
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
@@ -300,7 +336,9 @@ public class Graficar extends javax.swing.JFrame {
     String selectedValue = selectedItem.toString();
     // Ahora puedes utilizar selectedValue, que contiene el valor seleccionado en el JComboBox.
     
-    prueba.setText(selectedValue);
+  grafica.GenerarGrafico(selectedValue);
+    
+        refrescarGrafica();
     
 } else {
     // Manejar el caso en el que no se ha seleccionado ningún elemento.
@@ -340,7 +378,7 @@ public class Graficar extends javax.swing.JFrame {
             public void run() {
                 
              
-               // new Graficar().setVisible(true);
+                new Graficar().setVisible(false);
             }
         });
     }
@@ -351,13 +389,12 @@ public class Graficar extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> Indentificadores;
     private javax.swing.JComboBox<String> Logicos;
     private javax.swing.JComboBox<String> PalabraReservada;
+    private javax.swing.JLabel grafiquita;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea prueba;
     // End of variables declaration//GEN-END:variables
 }

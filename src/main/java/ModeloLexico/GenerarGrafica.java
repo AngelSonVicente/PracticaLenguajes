@@ -19,7 +19,7 @@ import java.io.File;
 
 
 public class GenerarGrafica {
-    private String Lexema;
+    private String Lexema="try";
     
     
     
@@ -40,9 +40,9 @@ public class GenerarGrafica {
     }
 
     
-    public void GenerarGrafico(){
+    public void GenerarGrafico(String Lex){
      
-         String input = Lexema; 
+         String input = Lex; 
 
         String dotFileName = "automata.dot";
 
@@ -70,7 +70,7 @@ public class GenerarGrafica {
             System.out.println("Archivo DOT generado con éxito: " + dotFileName);
 
             MutableGraph g = new Parser().read(dotFile);
-            Graphviz.fromGraph(g).height(1600).width(8000).render(Format.PNG).toFile(new File("automata.png"));
+            Graphviz.fromGraph(g).height(100).width(500).render(Format.PNG).toFile(new File("src/main/java/Imagenes/automata.png"));
             System.out.println("Imagen generada con éxito: automata.png");
         } catch (IOException e) {
             e.printStackTrace();

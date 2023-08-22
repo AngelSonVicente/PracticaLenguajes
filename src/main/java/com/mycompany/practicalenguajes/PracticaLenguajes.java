@@ -31,9 +31,9 @@ public class PracticaLenguajes {
 //            System.out.println(tokens.toString());
 //        }
 
-
-            GenerarGrafica grafica = new GenerarGrafica();
-                    grafica.GenerarGrafico();
+//
+//            GenerarGrafica grafica = new GenerarGrafica();
+//                    grafica.GenerarGrafico("try");
 
 
 
