@@ -26,15 +26,6 @@
           <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="Logicos" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="372" max="32767" attributes="0"/>
-                      <Component id="grafiquita" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="1350" max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
@@ -45,14 +36,23 @@
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="Asignacion" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="PalabraReservada" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="Indentificadores" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
                           <Component id="Comparacion" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                          <Component id="PalabraReservada" alignment="0" min="-2" pref="97" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="Asignacion" alignment="0" pref="98" max="32767" attributes="0"/>
+                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Logicos" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="346" max="32767" attributes="0"/>
+                      <Component id="grafiquita" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="1350" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
