@@ -7,6 +7,7 @@ package com.mycompany.practicalenguajes;
 import Analizador.ParserPy;
 import ModeloLexico.GenerarGrafica;
 import ModeloLexico.Token;
+import Ventanas.Principal;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,11 @@ import java.util.ArrayList;
 public class PracticaLenguajes {
 
     public static void main(String[] args) {
+        
+        
+        Principal principal = new Principal();
+
+        principal.setVisible(true);
         
 //        String contenido="or try if";
 //        

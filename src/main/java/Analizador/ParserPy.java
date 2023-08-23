@@ -43,6 +43,8 @@ public class ParserPy {
     int cont2=0;
     boolean comentario=false;
     boolean cadena=false;
+    boolean ErrorAlf=false;
+    
     
     
         public boolean LeerArchivo(String contenido){
@@ -76,8 +78,6 @@ return false;
             
             
   
-  //    IgnorarEspacios();  
-        //ignorar espacio en blanco 
     temporal = new StringBuilder();
     temporal2 = new StringBuilder();
     //temporal2 = new StringBuilder();
@@ -95,7 +95,7 @@ return false;
             
             
         CharActual=contenido.charAt(Posicioncontenido);
-     
+    
              
     columna++;
     Posicioncontenido++;
@@ -117,7 +117,7 @@ return false;
              System.out.println(cont);
         
              
-             
+         
              
              if(CharActual=='#'){
                  
@@ -390,13 +390,7 @@ return false;
             ListaGeneral.add(tokencito);
             temporal.setLength(0);
             temporal2.setLength(0);
-            
-//          Coolor colorcito= new Coolor(temporal2.toString(),"anaranjado");
-//             ListaContenido.add(colorcito);
-//        
-//            temporal2.setLength(0);
-//            
-            //System.out.println("Es Entero");
+     
         
         }
         
@@ -408,14 +402,7 @@ return false;
             ListaGeneral.add(tokencito2);
             temporal.setLength(0);
             temporal2.setLength(0);
-//            
-//              Coolor colorcito= new Coolor(temporal2.toString(),"anaranjado");
-//             ListaContenido.add(colorcito);
-//        
-//            temporal2.setLength(0);
-//            
-         //   System.out.println("Es Decimal");
-            
+
      
             
             

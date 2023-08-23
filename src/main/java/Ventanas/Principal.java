@@ -28,12 +28,7 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-/*
-import AnalizadorLexico.IdentSimbolo;
-import AnalizadorLexico.ParserPy;
-import ModeloLexico.Token;
-import java.util.ArrayList;
-*/
+
 /**
  *
  * @author MSI
@@ -266,7 +261,7 @@ public class Principal extends javax.swing.JFrame {
                 }
                         
         
-
+//
             
             
             
