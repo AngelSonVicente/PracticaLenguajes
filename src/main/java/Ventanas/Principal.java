@@ -194,7 +194,7 @@ public class Principal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(171, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Correr, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -266,53 +266,7 @@ public class Principal extends javax.swing.JFrame {
                 }
                         
         
-//        if(tokens.getTipotoken()==TipoToken.Identificador){
-//        
-//        StyleConstants.setForeground(estilo, Color.BLACK);
-//        }
-//        if(tokens.getTipotoken()==TipoToken.Palabra_Reservada){
-//        StyleConstants.setForeground(estilo, Color.MAGENTA);
-//      
-//        
-//        }
-//        if(tokens.getTipotoken()==TipoToken.Operador_Aritmetico||tokens.getTipotoken()==TipoToken.Operador_Comparacion || 
-//                tokens.getTipotoken()==TipoToken.Operador_Logico || tokens.getTipotoken()==TipoToken.Operador_Comparacion ){
-//        
-//        StyleConstants.setForeground(estilo, Color.BLUE);
-//        }
-//        if(tokens.getTipotoken()==TipoToken.Cadena||tokens.getTipotoken()==TipoToken.Entero|| 
-//                tokens.getTipotoken()==TipoToken.Decimal ){
-//        
-//        StyleConstants.setForeground(estilo, Color.ORANGE);
-//        }
-//        if( tokens.getTipotoken()==TipoToken.Coma||
-//                     tokens.getTipotoken()==TipoToken.PuntoComa || tokens.getTipotoken()==TipoToken.DosPuntos||
-//                     tokens.getTipotoken()==TipoToken.Llaves || tokens.getTipotoken()==TipoToken.Parentesis
-//                || tokens.getTipotoken()==TipoToken.Corchetes){
-//        
-//        StyleConstants.setForeground(estilo, Color.GREEN);
-//        }
-//        if( tokens.getTipotoken()==TipoToken.Comentario){
-//        
-//        StyleConstants.setForeground(estilo, Color.GRAY);
-//        }
-//        String Espacio=" ";
-//        if(linea!=tokens.getLinea()){
-//        Espacio="\n";
-//        }
-//                 try {
-//            doc.insertString(doc.getLength(), Espacio+tokens.getLexeman()+" ", estilo);
-//            
-//            
-//            
-//        } catch (BadLocationException ex) {
-//            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//                 
-//                 linea=tokens.getLinea();
 
- 
-            
             
             
             
