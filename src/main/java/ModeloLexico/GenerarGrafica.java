@@ -57,8 +57,7 @@ public class GenerarGrafica {
                 dotContent.append("  ").append(i).append(" [label=\"").append(c).append("\", shape=circle, width=0.15];\n");
                 }
             }
-            int lastIndex = input.length();
-           // dotContent.append("  ").append(lastIndex).append(" [label=\"\", shape=doublecircle, width=0.15];\n");
+            // dotContent.append("  ").append(lastIndex).append(" [label=\"\", shape=doublecircle, width=0.15];\n");
             for (int i = 0; i < input.length()-1; i++) {
                 dotContent.append("  ").append(i).append(" -> ").append(i + 1).append(";\n");
             }
@@ -70,7 +69,7 @@ public class GenerarGrafica {
             System.out.println("Archivo DOT generado con éxito: " + dotFileName);
 
             MutableGraph g = new Parser().read(dotFile);
-            Graphviz.fromGraph(g).height(100).width(500).render(Format.PNG).toFile(new File("src/main/java/Imagenes/automata.png"));
+            Graphviz.fromGraph(g).height(150).width(500).render(Format.PNG).toFile(new File("src/main/java/Imagenes/automata.png"));
             System.out.println("Imagen generada con éxito: automata.png");
         } catch (IOException e) {
             e.printStackTrace();
