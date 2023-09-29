@@ -35,7 +35,11 @@
     <artifactId>logback-classic</artifactId>
     <version>1.2.3</version>
 </dependency>
-        
+        <dependency>
+            <groupId>de.jflex</groupId>
+            <artifactId>jflex</artifactId>
+            <version>1.9.1</version>
+        </dependency>
     </dependencies>
     
 </project>

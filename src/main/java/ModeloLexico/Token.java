@@ -9,33 +9,24 @@ package ModeloLexico;
  * @author MSI
  */
 public class Token {
+    
     private TipoToken tipotoken;
+    
     private int linea;
     private int columna;
-    private String Lexeman;
+    private String Lexema;
 
-    @Override
-    public String toString() {
-        return "Token{" + "tipotoken=" + tipotoken + ", linea=" + linea + ", columna=" + columna + ", Lexema=" + Lexeman + '}';
-    }
-
-    
-    
-    
-    public Token(TipoToken tipotoken, int linea, int columna, String Lexeman) {
-        this.tipotoken = tipotoken;
-        this.linea = linea;
-        this.columna = columna;
-        this.Lexeman = Lexeman;
-    }
-
-    
-    
     public Token() {
     }
 
-    
-    
+    public Token(TipoToken tipotoken, int linea, int columna, String Lexema) {
+        this.tipotoken = tipotoken;
+        this.linea = linea;
+        this.columna = columna;
+        this.Lexema = Lexema;
+    }
+
+
     public TipoToken getTipotoken() {
         return tipotoken;
     }
@@ -61,13 +52,31 @@ public class Token {
     }
 
     public String getLexeman() {
-        return Lexeman;
+        return Lexema;
     }
 
-    public void setLexeman(String Lexeman) {
-        this.Lexeman = Lexeman;
+    public void setLexema(String Lexema) {
+        this.Lexema = Lexema;
     }
+
+    @Override
+    public String toString() {
+        return "Token{" + "tipotoken=" + tipotoken + ", linea=" + linea + ", columna=" + columna + ", Lexema=" + Lexema + '}';
+    }
+
     
     
+    
+    
+    
+    
+    
+    
+    
+
+
+
     
 }
+
+

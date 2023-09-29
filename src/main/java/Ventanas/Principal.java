@@ -4,15 +4,18 @@
  */
 package Ventanas;
 
-import Analizador.ParserPy;
+import AnalizadorLexico.ParserPy;
 import ModeloLexico.Token;
-import ModeloLexico.Coolor;
 import ModeloLexico.TipoToken;
 import java.awt.Color;
+
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -214,29 +217,82 @@ public class Principal extends javax.swing.JFrame {
     DefaultTableModel model;
     
     ArrayList<Token> ListaToken ;
+    ArrayList<Token> ListaErrores ;
     ArrayList<Token> ListaGeneral ;
    
     
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
-        int linea=0;
-
         String Contenido=contenido2.getText();
-
+        
+        ParserPy analizador = new ParserPy(Contenido);
+        
+        ListaToken=analizador.getTokens();
+        ListaGeneral=analizador.getTokensGeneral();
+        ListaErrores=analizador.getErrores();
+        
+        
+        
+//        String Resultado="";
+//
+//        
+//            File archivo = new File(System.getProperty("user.dir")+"/src/main/java/Ventanas/archivo.txt");
+//        PrintWriter escribir;
+//        try {
+//            escribir = new PrintWriter(archivo);
+//            escribir.print(contenido2.getText());
+//            escribir.close();
+//        } catch (FileNotFoundException ex) {
+//        
+//        }
+//        
+//        try {
+//            Reader lector = new BufferedReader(new FileReader(System.getProperty("user.dir")+"/src/main/java/Ventanas/archivo.txt"));
+//            
+//            Lexico lexer = new Lexico(lector);
+//            String resultado = "";
+//            while (true) {
+//                Token tokens = lexer.yylex();
+//                if (tokens == null) {
+//                    resultado += "FIN";
+//                    errores.setText(resultado);
+//                    return;
+//                }
+//                if(tokens.getTipotoken()==TipoToken.Palabra_Reservada){
+//                    resultado+="Lexema:  " + tokens.getLexeman() + " TIpo de token " + tokens.getTipotoken() + " Linea " + tokens.getLinea() + " Columna: " + tokens.getColumna()+"\n";
+//                }
+//                if(tokens.getTipotoken()==TipoToken.Error){
+//                    resultado+="Lexema:  " + tokens.getLexeman() + " TIpo de token " + tokens.getTipotoken() + " Linea " + tokens.getLinea() + " Columna: " + tokens.getColumna()+"\n";
+//                }
+//                if(tokens.getTipotoken()==TipoToken.Identificador){
+//                    resultado+="Lexema:  " + tokens.getLexeman() + " TIpo de token " + tokens.getTipotoken() + " Linea " + tokens.getLinea() + " Columna: " + tokens.getColumna()+"\n";
+//                }
+//                
+//            }
+//        } catch (FileNotFoundException ex) {
+//        
+//        } catch (IOException ex) {
+//        
+//        }
+    
+        
+        
+        
+        
+        
+        
+        
+        
         System.out.println(Contenido);
 
   
 
-        ParserPy analizador = new ParserPy();
+               
         
-        analizador.LeerArchivo(Contenido);
+        
         
         String imprimir ="";
-       ListaToken = analizador.getToken();
-       ListaGeneral = analizador.getTokensGenerales();
-   
-   ArrayList<Coolor> ListaColor = analizador.getColor();
-   
+    
    
    
    
@@ -256,8 +312,10 @@ public class Principal extends javax.swing.JFrame {
                 if(tokens.getTipotoken()==TipoToken.Comentario){
                 
                 model.addRow(new Object[]{tokens.getTipotoken(),"[#]([A-Z][a-z])*",tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
-                }
+               
+                }else{
                 model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
+                }
                 }
                         
         
@@ -271,72 +329,85 @@ public class Principal extends javax.swing.JFrame {
         
         }
    
-        contenido2.setText("");
-        for(Token tokens: ListaGeneral){
-            if(tokens.getLexeman().equals("")){
-            
-            }else{
-             
-            //model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
-            
-                        
-        
-        if(tokens.getTipotoken()==TipoToken.Identificador){
-        
-        StyleConstants.setForeground(estilo, Color.BLACK);
-        }
-        if(tokens.getTipotoken()==TipoToken.Palabra_Reservada){
-        StyleConstants.setForeground(estilo, Color.MAGENTA);
-      
-        
-        }
-        if(tokens.getTipotoken()==TipoToken.Operador_Aritmetico||tokens.getTipotoken()==TipoToken.Operador_Comparacion || 
-                tokens.getTipotoken()==TipoToken.Operador_Logico || tokens.getTipotoken()==TipoToken.Operador_Comparacion ){
-        
-        StyleConstants.setForeground(estilo, Color.BLUE);
-        }
-        if(tokens.getTipotoken()==TipoToken.Cadena||tokens.getTipotoken()==TipoToken.Entero|| 
-                tokens.getTipotoken()==TipoToken.Decimal ){
-        
-        StyleConstants.setForeground(estilo, Color.ORANGE);
-        }
-        if( tokens.getTipotoken()==TipoToken.Coma||
-                     tokens.getTipotoken()==TipoToken.PuntoComa || tokens.getTipotoken()==TipoToken.DosPuntos||
-                     tokens.getTipotoken()==TipoToken.Llaves || tokens.getTipotoken()==TipoToken.Parentesis
-                || tokens.getTipotoken()==TipoToken.Corchetes){
-        
-        StyleConstants.setForeground(estilo, Color.GREEN);
-        }
-        if( tokens.getTipotoken()==TipoToken.Comentario){
-        
-        StyleConstants.setForeground(estilo, Color.GRAY);
-        }
-        if( tokens.getTipotoken()==TipoToken.Error){
-        
-        StyleConstants.setForeground(estilo, Color.RED);
-        }
-    
-                 try {
-            doc.insertString(doc.getLength(), tokens.getLexeman(), estilo);
-            
-            
-            
-        } catch (BadLocationException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                 
-                 linea=tokens.getLinea();
+//        contenido2.setText("");
+//   
+//        
+//      
+//        
+//        for (Token token : ListaGeneral) {
+//    // Obtén el tipo de token y el lexema
+//    TipoToken tipoToken = token.getTipotoken();
+//    String lexema = token.getLexeman();
+//    
+//    // Define un estilo para el token actual
+//    
+//    // Configura el color del estilo según el tipo de token
+//    if (tipoToken == TipoToken.Identificador) {
+//        StyleConstants.setForeground(estilo, Color.BLACK);
+//    } else if (tipoToken == TipoToken.Palabra_Reservada) {
+//        StyleConstants.setForeground(estilo, Color.MAGENTA);
+//    } else if (tipoToken == TipoToken.Operador_Aritmetico || tipoToken == TipoToken.Operador_Comparacion || tipoToken == TipoToken.Operador_Logico) {
+//        StyleConstants.setForeground(estilo, Color.BLUE);
+//    } else if (tipoToken == TipoToken.Cadena || tipoToken == TipoToken.Entero || tipoToken == TipoToken.Decimal) {
+//        StyleConstants.setForeground(estilo, Color.ORANGE);
+//    } else if (tipoToken == TipoToken.Coma || tipoToken == TipoToken.PuntoComa || tipoToken == TipoToken.DosPuntos ||
+//               tipoToken == TipoToken.LlavesA || tipoToken == TipoToken.LlavesC || tipoToken == TipoToken.ParentesisA || 
+//               tipoToken == TipoToken.ParentesisC || tipoToken == TipoToken.CorchetesA || tipoToken == TipoToken.CorchetesC) {
+//        StyleConstants.setForeground(estilo, Color.GREEN);
+//    } else if (tipoToken == TipoToken.Comentario) {
+//        StyleConstants.setForeground(estilo, Color.GRAY);
+//    } else if (tipoToken == TipoToken.Error) {
+//        StyleConstants.setForeground(estilo, Color.RED);
+//    }
+//    
+//    // Inserta el lexema en el documento con el estilo aplicado
+//    try {
+//        doc.insertString(doc.getLength(), lexema, estilo);
+//    } catch (BadLocationException ex) {
+//        ex.printStackTrace();
+//    }
+//    
+//    // Añade saltos de línea según la posición del token
+//    int linea = token.getLinea();
+//    int columna = token.getColumna();
+//    
+//    // Calcula la cantidad de saltos de línea necesarios
+//    while (linea > 1) {
+//        try {
+//            doc.insertString(doc.getLength(), "\n", estilo);
+//        } catch (BadLocationException ex) {
+//            ex.printStackTrace();
+//        }
+//        linea--;
+//    }
+//    
+//    // Calcula la cantidad de espacios necesarios para la columna
+//    int espacios = columna - 1;
+//    StringBuilder espaciosStr = new StringBuilder();
+//    for (int i = 0; i < espacios; i++) {
+//        espaciosStr.append(" ");  // Carácter de espacio no rompible
+//    }
+//    
+//    // Inserta los espacios en blanco
+//    try {
+//        doc.insertString(doc.getLength(), espaciosStr.toString(), estilo);
+//    } catch (BadLocationException ex) {
+//        ex.printStackTrace();
+//    }
+//
+//    
+//        }
 
- 
-            
-            
-            
-            
-            }
-     
         
         
-        }
+        
+        
+        
+        
+        
+        
+        
+        
         
         for(Token tokenerror: ListaErrores){
             
@@ -353,6 +424,8 @@ public class Principal extends javax.swing.JFrame {
         
               
     
+        
+        
         
        
     }//GEN-LAST:event_CorrerActionPerformed
