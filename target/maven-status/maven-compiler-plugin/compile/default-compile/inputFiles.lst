@@ -1,12 +1,10 @@
+C:\PracticaLenguajes\src\main\java\AnalizadorLexico\ExecuteJflex.java
 C:\PracticaLenguajes\src\main\java\Ventanas\Graficar.java
-C:\PracticaLenguajes\src\main\java\Analizador\ListaOperadores.java
 C:\PracticaLenguajes\src\main\java\ModeloLexico\GenerarGrafica.java
 C:\PracticaLenguajes\src\main\java\Ventanas\Principal.java
-C:\PracticaLenguajes\src\main\java\ModeloLexico\Alfabeto.java
 C:\PracticaLenguajes\src\main\java\ModeloLexico\TipoToken.java
-C:\PracticaLenguajes\src\main\java\Analizador\IdentSimbolo.java
-C:\PracticaLenguajes\src\main\java\Analizador\Operadores.java
 C:\PracticaLenguajes\src\main\java\com\mycompany\practicalenguajes\PracticaLenguajes.java
+C:\PracticaLenguajes\src\main\java\AnalizadorLexico\Lexico.java
+C:\PracticaLenguajes\src\main\java\AnalizadorLexico\ParserPy.java
 C:\PracticaLenguajes\src\main\java\ModeloLexico\Token.java
-C:\PracticaLenguajes\src\main\java\Analizador\ParserPy.java
-C:\PracticaLenguajes\src\main\java\ModeloLexico\Coolor.java
+C:\PracticaLenguajes\src\main\java\AnalizadorSintactico\AsignacionDeclaracion.java

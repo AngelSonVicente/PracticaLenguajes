@@ -10,7 +10,7 @@ import ModeloLexico.*;
 
 L=[a-zA-Z_]+
 D=[0-9]+
-espacio=[ ,\t,\r,\n]+
+espacio=[ | \t | \r | \n]
 
 %{
     public String lexeme;
@@ -28,7 +28,6 @@ del |
 elif |
 else |
 except |
-False |
 finally |
 for |
 from |
@@ -45,7 +44,6 @@ not |
 pass |
 raise |
 return |
-True |
 try |
 while |
 with |

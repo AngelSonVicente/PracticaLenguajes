@@ -1,12 +1,5 @@
-def if "cadena " : ( 4 + 5 )
-mi_id_
-#comentario 
-while
-for
->=
-<
-'cadena en comillas simples'
+if 10 == 10: # 38 -if-59
 
-#un error se puede presentar como la siguiente linea
+elif 10 != 10: # 39 -elif-61
 
-" mi cadena que no cierra
+else: # 40 -else-63

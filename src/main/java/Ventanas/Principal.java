@@ -5,6 +5,7 @@
 package Ventanas;
 
 import AnalizadorLexico.ParserPy;
+import AnalizadorSintactico.*;
 import ModeloLexico.Token;
 import ModeloLexico.TipoToken;
 import java.awt.Color;
@@ -223,6 +224,10 @@ public class Principal extends javax.swing.JFrame {
     
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
+        if(ListaToken!=null){
+        ListaToken.clear();
+        }
+        
         String Contenido=contenido2.getText();
         
         ParserPy analizador = new ParserPy(Contenido);
@@ -283,7 +288,7 @@ public class Principal extends javax.swing.JFrame {
         
         
         
-        System.out.println(Contenido);
+      //  System.out.println(Contenido);
 
   
 
@@ -399,8 +404,13 @@ public class Principal extends javax.swing.JFrame {
 //        }
 
         
+
+
+
+       // AsignacionDeclaracion sintactico = new AsignacionDeclaracion(ListaToken);
+        CondicionIF sintactico = new CondicionIF(ListaGeneral);
         
-        
+        sintactico.analizar();
         
         
         
@@ -418,6 +428,25 @@ public class Principal extends javax.swing.JFrame {
             
             System.out.println(tokenerror.toString());
         }
+        
+        
+//        for(Token tokenerror: ListaGeneral){
+//            
+//            
+//            
+//        
+//            imprimir=imprimir+"\n "+ tokenerror.toString(); 
+//            
+//            System.out.println(tokenerror.toString());
+//        }
+//        
+//        for(Token general : ListaGeneral){
+//            
+//            
+//              
+//            System.out.println(general.toString());
+//        }
+//        
         
             errores.setText(imprimir);
         

@@ -57,16 +57,24 @@ public class ParserPy {
             
             Lexico lexer = new Lexico(lector);
             while (true) {
+                
                 Token tokens = lexer.yylex();
+                
                 if (tokens == null) {
                     return;
                 }
                 if(tokens.getTipotoken()==TipoToken.Error){
                 ListaErrores.add(tokens);
-                ListaGeneral.add(tokens);
+                 ListaGeneral.add(tokens);
+               
                 }else{
-                ListaGeneral.add(tokens);
+                    if(tokens.getTipotoken()!=TipoToken.Comentario){
+                     ListaGeneral.add(tokens);
+               
+                    }
                 ListaToken.add(tokens);
+                
+                
                 }
              
                 
