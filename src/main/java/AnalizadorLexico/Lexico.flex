@@ -37,6 +37,7 @@ in |
 lambda |
 is |
 None |
+range |
 nonlocal |
 pass |
 raise |

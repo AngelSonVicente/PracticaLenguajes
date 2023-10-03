@@ -1,2 +1,2 @@
-while a==True:
-#anita comenta
+for n in range(a,v):
+else:
