@@ -228,6 +228,10 @@ public class Principal extends javax.swing.JFrame {
         ListaToken.clear();
         }
         
+        if(ListaGeneral!=null){
+            ListaGeneral.clear();
+        }
+        
         String Contenido=contenido2.getText();
         
         ParserPy analizador = new ParserPy(Contenido);
@@ -408,9 +412,11 @@ public class Principal extends javax.swing.JFrame {
 
 
        // AsignacionDeclaracion sintactico = new AsignacionDeclaracion(ListaToken);
-        CondicionIF sintactico = new CondicionIF(ListaGeneral);
-        
+     //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
+       CicloWhile sintactico = new CicloWhile(ListaGeneral); 
         sintactico.analizar();
+        
+  
         
         
         

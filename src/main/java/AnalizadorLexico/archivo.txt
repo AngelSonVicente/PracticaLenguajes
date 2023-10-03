@@ -1,5 +1,2 @@
-if 10 == 10: # 38 -if-59
-
-elif 10 != 10: # 39 -elif-61
-
-else: # 40 -else-63
+while a==True:
+#anita comenta

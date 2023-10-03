@@ -12,23 +12,24 @@ import java.util.ArrayList;
  *
  * @author MSI
  */
-public class CondicionIF {
-
+public class CicloWhile {
+    
     private ArrayList<Token> tokens;
     private int index;
-    private boolean BIF=false;
-    private boolean ErrorELIF=false;
-    private boolean ErrorELSE=false;
 
-    public CondicionIF(ArrayList<Token> tokens) {
+    public CicloWhile(ArrayList<Token> tokens) {
         this.tokens = tokens;
-        this.index = 0;
+        this.index =0;
     }
-
+    
+    
+    
+    
+    
     public void analizar() {
         while (index < tokens.size()) {
-            if (Estructura()) {
-                System.out.println("IF Valido");
+            if (WHILE()) {
+                System.out.println("While Valido");
             } else {
                 
                 System.out.println("Error de sintaxis en la posición: " + index);
@@ -37,70 +38,14 @@ public class CondicionIF {
         }
     }
     
-    private boolean Estructura(){
-      if(!IF()){
-          return false;
-      }else{
-          ELIF();
-          ELSE();
-        if( ErrorELIF || ErrorELSE){
-            return false;
-        }else{
-        return true;
-        }
-      }
-        
-       
-       
-        
-    
-    }
-
-    private boolean IF() {
-        if (match("if") && Expresion() && matchTT(TipoToken.DosPuntos)) {
-            BIF=true;
+        private boolean WHILE() {
+        if (match("while") && Expresion() && matchTT(TipoToken.DosPuntos)) {
             return true;
         }
         return false;
     }
-
-    private boolean ELIF() {
-        
-
-        if(BIF){
         
         
-            if (match("elif")) {
-                
-                if(Expresion() && matchTT(TipoToken.DosPuntos)){
-                return true;
-                }else{
-                
-                ErrorELIF=true;
-                }
-            }
-        }
-        
-        return false;
-    }
-
-    private boolean ELSE() {
-      
-
-        if(BIF){
-            if (match("else")) {
-                if( matchTT(TipoToken.DosPuntos)){
-                return true;
-                }else{
-                 ErrorELSE=true;
-                }
-                return true;
-            }
-        }
-        return false;
-    }
-    
-
     private boolean Expresion() {
         if ((ExpresionComparacion()||ExpresionBoolean())) {
             return true;
@@ -130,6 +75,8 @@ public class CondicionIF {
         return false;
     }
 
+ 
+    
     private boolean match(String lexema) {
         if (index < tokens.size() && tokens.get(index).getLexeman().equals(lexema)) {
             if (tokens.get(index).getColumna() == 1) {
@@ -150,5 +97,6 @@ public class CondicionIF {
         }
         return false;
     }
-
+    
+    
 }

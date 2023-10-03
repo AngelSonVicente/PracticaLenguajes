@@ -17,7 +17,6 @@ espacio=[ | \t | \r | \n]
 %}
 %%
 
-and |
 as |
 assert |
 break |
@@ -39,8 +38,6 @@ lambda |
 is |
 None |
 nonlocal |
-or |
-not |
 pass |
 raise |
 return |
