@@ -414,8 +414,9 @@ public class Principal extends javax.swing.JFrame {
        // AsignacionDeclaracion sintactico = new AsignacionDeclaracion(ListaToken);
      //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
       // CicloWhile sintactico = new CicloWhile(ListaGeneral); 
-      CicloFor sintactico = new CicloFor(ListaGeneral);
-      sintactico.analizar();
+     // CicloFor sintactico = new CicloFor(ListaGeneral);
+     FuncionMetodo sintactico = new FuncionMetodo(ListaGeneral);
+     sintactico.analizar();
         
   
         

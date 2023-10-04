@@ -1,2 +1,2 @@
-for n in range(a,v):
-else:
+def hola():
+ return 1
