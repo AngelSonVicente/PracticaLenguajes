@@ -1,2 +1,1 @@
-def hola():
- return 1
+estado = "Es bonito" if  es_bonito else "No es bonito"

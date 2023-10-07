@@ -415,7 +415,7 @@ public class Principal extends javax.swing.JFrame {
      //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
       // CicloWhile sintactico = new CicloWhile(ListaGeneral); 
      // CicloFor sintactico = new CicloFor(ListaGeneral);
-     FuncionMetodo sintactico = new FuncionMetodo(ListaGeneral);
+     OperadorTernario sintactico = new OperadorTernario(ListaGeneral);
      sintactico.analizar();
         
   
