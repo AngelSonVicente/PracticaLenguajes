@@ -6,6 +6,8 @@ package AnalizadorSintactico;
 
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
+import ModeloSintactico.ErrorSintactico;
+import ModeloSintactico.ResultadoAnalisis;
 import java.util.ArrayList;
 
 /**
@@ -13,81 +15,93 @@ import java.util.ArrayList;
  * @author MSI
  */
 public class FuncionMetodo {
-      
-    private ArrayList<Token> tokens;
-    private int index;
-    private boolean BMetodo=false;
-    private boolean ErrorRETURN=false;
 
-    public FuncionMetodo(ArrayList<Token> tokens) {
+    private ArrayList<Token> tokens;
+    ArrayList<ResultadoAnalisis> errores = new ArrayList<ResultadoAnalisis>();
+
+    private int index;
+    private int columna;
+    private boolean error = false;
+    private boolean BMetodo = false;
+    private boolean ErrorRETURN = false;
+
+    public FuncionMetodo(ArrayList<Token> tokens, int index, int ColumnaAnterior) {
         this.tokens = tokens;
-        this.index = 0;
+        this.index = index;
+        this.columna = tokens.get(index).getColumna();
+
     }
 
-    public void analizar() {
+    public int analizar() {
+
         while (index < tokens.size()) {
             if (Estructura()) {
-                System.out.println("Funcion Valido");
+                //      System.out.println("Funcion Valido");
+                break;
             } else {
-                
-                System.out.println("Error de sintaxis en la posición: " + index);
+
+//              System.out.println("Error de sintaxis en la posición: " + index);
+                ErrorSintactico errorsintactico = new ErrorSintactico("Error de sintaxis", tokens.get(index).getLinea(), tokens.get(index).getColumna());
+                ResultadoAnalisis analisis = new ResultadoAnalisis(index, errorsintactico);
+                errores.add(analisis);
+
                 break;
             }
         }
+        return index;
     }
-    
-    
-    private boolean Estructura(){
-      if(!FuncionMetodo()){
-          return false;
-      }else{
-       RETURN();
-        if( ErrorRETURN){
+
+    private boolean Estructura() {
+        if (!FuncionMetodo()) {
             return false;
-        }else{
-        return true;
-        }
-      }
+        } else {
+            BloqueCodigo();
+
+            RETURN();
+            if (ErrorRETURN) {
+                return false;
+            } else {
+                return true;
             }
-    
-    
-        private boolean FuncionMetodo() {
-        if (match("def") && matchTT(TipoToken.Identificador)&&( ExpresionParaetros() || ExpresionNOParaetros())&& matchTT(TipoToken.DosPuntos)) {
-           BMetodo=true;
+        }
+    }
+
+    private boolean FuncionMetodo() {
+        if (match("def") && matchTT(TipoToken.Identificador) && (ExpresionParaetros() || ExpresionNOParaetros()) && matchTT(TipoToken.DosPuntos)) {
+            BMetodo = true;
             return true;
         }
         return false;
     }
-        
-        
-        
-             private boolean RETURN() {
 
-        if(BMetodo){
+    private boolean RETURN() {
+
+        if (BMetodo) {
             if (match("return")) {
-                
-                if( expresion() ){
-                return true;
-                }else{
-                 ErrorRETURN=true;
+
+                if (expresion()) {
+                    return true;
+                } else {
+                    ErrorRETURN = true;
                 }
                 return true;
             }
         }
         return false;
     }
-    
-       private boolean expresion() {
-        return  cadena() || arreglo() || multiplicacion() || matchTT(TipoToken.Constante )||matchTT(TipoToken.Boolean) || matchTT(TipoToken.Identificador);
+
+    private boolean expresion() {
+        return cadena() || arreglo() || multiplicacion() || matchTT(TipoToken.Constante) || matchTT(TipoToken.Boolean) || matchTT(TipoToken.Identificador);
     }
-       
-       private boolean cadena() {
+
+    private boolean cadena() {
         if (matchTT(TipoToken.Cadena)) {
             return true;
         }
         return false;
     }
-        private boolean arreglo() {
+
+    private boolean arreglo() {
         if (matchTT(TipoToken.CorchetesA)) {
             if (elementos_arreglo()) {
                 return matchTT(TipoToken.CorchetesC);
@@ -95,14 +109,15 @@ public class FuncionMetodo {
         }
         return false;
     }
-             private boolean multiplicacion() {
+
+    private boolean multiplicacion() {
         if (matchTT(TipoToken.Operador_Aritmetico) && matchTT(TipoToken.Constante)) {
             return true;
         }
         return false;
     }
-        
-          private boolean elementos_arreglo() {
+
+    private boolean elementos_arreglo() {
         if (expresion()) {
             while (matchTT(TipoToken.Coma)) {
                 if (!expresion()) {
@@ -113,38 +128,33 @@ public class FuncionMetodo {
         }
         return false;
     }
-             
-             
-             
-             
-    
-        private boolean ExpresionParaetros() {
+
+    private boolean ExpresionParaetros() {
         if (matchTT(TipoToken.ParentesisA)) {
             if (Parametros()) {
                 return matchTT(TipoToken.ParentesisC);
-            }else{
-            if(matchTT(TipoToken.CorchetesC)){
-            }
+            } else {
+                if (matchTT(TipoToken.CorchetesC)) {
+                }
             }
         }
         return false;
     }
-        private boolean ExpresionNOParaetros() {
-            
-        if ( matchTT(TipoToken.ParentesisC)) {
-            if(tokens.get(index-2).getTipotoken() == TipoToken.Coma){
+
+    private boolean ExpresionNOParaetros() {
+
+        if (matchTT(TipoToken.ParentesisC)) {
+            if (tokens.get(index - 2).getTipotoken() == TipoToken.Coma) {
                 return false;
-            }else{
-          return true;
+            } else {
+                return true;
             }
         }
         return false;
     }
-        
-    
-    
-         private boolean Parametros() {
-         
+
+    private boolean Parametros() {
+
         if (matchTT(TipoToken.Identificador)) {
             while (matchTT(TipoToken.Coma)) {
                 if (!matchTT(TipoToken.Identificador)) {
@@ -153,31 +163,29 @@ public class FuncionMetodo {
             }
             return true;
         }
-      
+
         return false;
     }
-    
+
     private boolean match(String lexema) {
         if (index < tokens.size() && tokens.get(index).getLexeman().equals(lexema)) {
-            if (lexema.equals("def")&&tokens.get(index).getColumna() == 1) {
+            if (lexema.equals("def") && tokens.get(index).getColumna() == 1) {
                 index++;
-              
+
                 return true;
-                
 
             }
-            
-            if(lexema.equals("return") && tokens.get(index).getColumna() != 1){
+
+            if (lexema.equals("return") && tokens.get(index).getColumna() != 1) {
                 index++;
-              
+
                 return true;
             }
-            
-            
+
             return false;
         }
-      //  System.out.println("Expresion obtenida: " + tokens.get(index).getLexeman() + " Expresion Esperada: " + lexema);
-       
+        //  System.out.println("Expresion obtenida: " + tokens.get(index).getLexeman() + " Expresion Esperada: " + lexema);
+
         return false;
     }
 
@@ -186,8 +194,37 @@ public class FuncionMetodo {
             index++;
             return true;
         }
-       // System.out.println("Expresion obtenida: " + tokens.get(index).getTipotoken()+ " Expresion Esperada: " + token);
-       
+        // System.out.println("Expresion obtenida: " + tokens.get(index).getTipotoken()+ " Expresion Esperada: " + token);
+
         return false;
     }
+
+    public ArrayList<ResultadoAnalisis> getAnalisis() {
+        return errores;
+    }
+
+    public boolean getError() {
+        return error;
+    }
+
+    private void BloqueCodigo() {
+        if (index < tokens.size()) {
+
+            if (tokens.get(index).getColumna() > columna) {
+
+           //     System.out.println("esta entrando a un bloque interno");
+
+                Sintactico sintactico = new Sintactico(tokens, tokens.get(index).getColumna(), index, true);
+                try {
+                    errores.addAll(sintactico.analizar());
+
+                } catch (Exception e) {
+                }
+                index = sintactico.getIndex();
+
+            }
+        }
+
+    }
+
 }

@@ -8,6 +8,7 @@ import AnalizadorLexico.ParserPy;
 import AnalizadorSintactico.*;
 import ModeloLexico.Token;
 import ModeloLexico.TipoToken;
+import ModeloSintactico.ResultadoAnalisis;
 import java.awt.Color;
 
 import java.io.BufferedReader;
@@ -32,7 +33,6 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-
 /**
  *
  * @author MSI
@@ -44,14 +44,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        model=(DefaultTableModel)this.TablaReporte.getModel();
-              
-        
+        model = (DefaultTableModel) this.TablaReporte.getModel();
+
     }
-    
-  
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,6 +78,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        Reportes = new javax.swing.JMenu();
+        ErrorLexico = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -167,6 +164,18 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu6);
 
+        Reportes.setText("Reportes");
+
+        ErrorLexico.setText("Errores Lexicos");
+        ErrorLexico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ErrorLexicoActionPerformed(evt);
+            }
+        });
+        Reportes.add(ErrorLexico);
+
+        jMenuBar1.add(Reportes);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,34 +223,32 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     DefaultTableModel model;
-    
-    ArrayList<Token> ListaToken ;
-    ArrayList<Token> ListaErrores ;
-    ArrayList<Token> ListaGeneral ;
-   
-    
+
+    ArrayList<Token> ListaToken;
+    ArrayList<Token> ListaErrores;
+    ArrayList<Token> ListaGeneral;
+  ArrayList<ResultadoAnalisis> ErrorSintactico ;
+      
+
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
-        if(ListaToken!=null){
-        ListaToken.clear();
+        if (ListaToken != null) {
+            ListaToken.clear();
         }
-        
-        if(ListaGeneral!=null){
+
+        if (ListaGeneral != null) {
             ListaGeneral.clear();
         }
-        
-        String Contenido=contenido2.getText();
-        
+
+        String Contenido = contenido2.getText();
+
         ParserPy analizador = new ParserPy(Contenido);
-        
-        ListaToken=analizador.getTokens();
-        ListaGeneral=analizador.getTokensGeneral();
-        ListaErrores=analizador.getErrores();
-        
-        
-        
+
+        ListaToken = analizador.getTokens();
+        ListaGeneral = analizador.getTokensGeneral();
+        ListaErrores = analizador.getErrores();
+
 //        String Resultado="";
 //
 //        
@@ -283,61 +290,36 @@ public class Principal extends javax.swing.JFrame {
 //        } catch (IOException ex) {
 //        
 //        }
-    
-        
-        
-        
-        
-        
-        
-        
-        
-      //  System.out.println(Contenido);
+        //  System.out.println(Contenido);
+        String imprimir = "";
 
-  
-
-               
-        
-        
-        
-        String imprimir ="";
-    
-   
-   
-   
-   ArrayList<Token> ListaErrores = analizador.getErrores();
-                 StyledDocument doc = contenido2.getStyledDocument();
+        ArrayList<Token> ListaErrores = analizador.getErrores();
+        StyledDocument doc = contenido2.getStyledDocument();
         Style estilo = doc.addStyle("ColorStyle", null);
-   
-        for(Token tokens: ListaToken){
-            if(tokens.getLexeman().equals("")){
-            
-            }else{
-             
-         if(tokens.getTipotoken()==TipoToken.Cadena){
-                
-                model.addRow(new Object[]{tokens.getTipotoken(),"[\"]([A-Z]|[a-z])*[\"]",tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
-                }else{
-                if(tokens.getTipotoken()==TipoToken.Comentario){
-                
-                model.addRow(new Object[]{tokens.getTipotoken(),"[#]([A-Z][a-z])*",tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
-               
-                }else{
-                model.addRow(new Object[]{tokens.getTipotoken(),tokens.getLexeman(),tokens.getLexeman(),tokens.getLinea(),tokens.getColumna()});
+
+        for (Token tokens : ListaToken) {
+            if (tokens.getLexeman().equals("")) {
+
+            } else {
+
+                if (tokens.getTipotoken() == TipoToken.Cadena) {
+
+                    model.addRow(new Object[]{tokens.getTipotoken(), "[\"]([A-Z]|[a-z])*[\"]", tokens.getLexeman(), tokens.getLinea(), tokens.getColumna()});
+                } else {
+                    if (tokens.getTipotoken() == TipoToken.Comentario) {
+
+                        model.addRow(new Object[]{tokens.getTipotoken(), "[#]([A-Z][a-z])*", tokens.getLexeman(), tokens.getLinea(), tokens.getColumna()});
+
+                    } else {
+                        model.addRow(new Object[]{tokens.getTipotoken(), tokens.getLexeman(), tokens.getLexeman(), tokens.getLinea(), tokens.getColumna()});
+                    }
                 }
-                }
-                        
-        
+
 //
-            
-            
-            
             }
-     
-        
-        
+
         }
-   
+
 //        contenido2.setText("");
 //   
 //        
@@ -406,38 +388,27 @@ public class Principal extends javax.swing.JFrame {
 //
 //    
 //        }
-
-        
-
-
-
-       // AsignacionDeclaracion sintactico = new AsignacionDeclaracion(ListaToken);
-     //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
-      // CicloWhile sintactico = new CicloWhile(ListaGeneral); 
-     // CicloFor sintactico = new CicloFor(ListaGeneral);
-     OperadorTernario sintactico = new OperadorTernario(ListaGeneral);
-     sintactico.analizar();
-        
-  
-        
-        
-        
-        
-        
-        
-        
-        
-        for(Token tokenerror: ListaErrores){
-            
-            
+        // AsignacionDeclaracion sintactico = new AsignacionDeclaracion(ListaToken);
+        //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
+        // CicloWhile sintactico = new CicloWhile(ListaGeneral); 
+        // CicloFor sintactico = new CicloFor(ListaGeneral);
+        Sintactico sintactico = new Sintactico(ListaGeneral, 1, 0,false);
+        try {
             
         
-            imprimir=imprimir+"\n "+ tokenerror.toString(); 
             
+          ErrorSintactico =  sintactico.analizar();
+        
+        for (ResultadoAnalisis tokenerror : ErrorSintactico) {
+
+            imprimir = imprimir + "\n " + tokenerror.toString();
+
             System.out.println(tokenerror.toString());
         }
-        
-        
+        } catch (Exception e) {
+        }
+
+
 //        for(Token tokenerror: ListaGeneral){
 //            
 //            
@@ -455,59 +426,55 @@ public class Principal extends javax.swing.JFrame {
 //            System.out.println(general.toString());
 //        }
 //        
-        
-            errores.setText(imprimir);
-        
-        
-              
-    
-        
-        
-        
-       
+        errores.setText(imprimir);
+
+
     }//GEN-LAST:event_CorrerActionPerformed
 
-         
-         
+
     private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
         // TODO add your handling code here:
-        
-         Graficar graficar = new Graficar(ListaToken);
+
+        Graficar graficar = new Graficar(ListaToken);
         graficar.setVisible(true);
-       
-        
+
+
     }//GEN-LAST:event_jMenu6ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-    Graficar graficar = new Graficar(ListaToken);
+        Graficar graficar = new Graficar(ListaToken);
         graficar.setVisible(true);
-     
+
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
 
         JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
+        int returnValue = fileChooser.showOpenDialog(null);
 
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    try {
-                        FileReader fileReader = new FileReader(selectedFile);
-                        BufferedReader bufferedReader = new BufferedReader(fileReader);
-                        StringBuilder content = new StringBuilder();
-                        String line;
-                        while ((line = bufferedReader.readLine()) != null) {
-                            content.append(line).append("\n");
-                        }
-                        contenido2.setText(content.toString());
-                        bufferedReader.close();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                FileReader fileReader = new FileReader(selectedFile);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                StringBuilder content = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    content.append(line).append("\n");
                 }
+                contenido2.setText(content.toString());
+                bufferedReader.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
 
 
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void ErrorLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErrorLexicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ErrorLexicoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -540,7 +507,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                  
+
                 new Principal().setVisible(true);
             }
         });
@@ -548,6 +515,8 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Correr;
+    private javax.swing.JMenuItem ErrorLexico;
+    private javax.swing.JMenu Reportes;
     private javax.swing.JTable TablaReporte;
     private javax.swing.JTextPane contenido2;
     private javax.swing.JTextArea errores;

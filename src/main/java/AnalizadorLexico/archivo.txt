@@ -1,1 +1,29 @@
-estado = "Es bonito" if  es_bonito else "No es bonito"
+
+# condicional simple
+if True:
+    # Bloque de código
+    miVariable = "Verdadero"
+else:
+    miVariable = "Falso"
+
+# condicional anidado
+a = 5
+v = 8
+if a > v:
+    # Bloque de código
+    resultado = "a es mayor que v"
+elif a < v:
+    # Bloque de código
+    resultado = "a es menor que v"
+else:
+    resultado = "a es igual a v"
+
+# ciclos
+for i in range(5):
+    print(i)
+
+contador = 0
+while contador < 5:
+    print(contador)
+    contador += 1
+
