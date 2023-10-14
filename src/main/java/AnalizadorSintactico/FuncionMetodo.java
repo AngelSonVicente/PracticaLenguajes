@@ -7,6 +7,8 @@ package AnalizadorSintactico;
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
 import ModeloSintactico.ErrorSintactico;
+import ModeloSintactico.Funciones;
+import ModeloSintactico.ParametrosFuncion;
 import ModeloSintactico.ResultadoAnalisis;
 import java.util.ArrayList;
 
@@ -19,16 +21,24 @@ public class FuncionMetodo {
     private ArrayList<Token> tokens;
     ArrayList<ResultadoAnalisis> errores = new ArrayList<ResultadoAnalisis>();
 
+    private int cantidadParametros = 0;
     private int index;
+    private int lineainical;
+    private int columnainicial;
+    private String nombre;
     private int columna;
     private boolean error = false;
     private boolean BMetodo = false;
     private boolean ErrorRETURN = false;
+    private Funciones funcion;
+    private ArrayList<ParametrosFuncion> ParametrosFuncion = new ArrayList<ParametrosFuncion>();
 
     public FuncionMetodo(ArrayList<Token> tokens, int index, int ColumnaAnterior) {
         this.tokens = tokens;
         this.index = index;
         this.columna = tokens.get(index).getColumna();
+        this.lineainical = tokens.get(index).getLinea();
+        this.columnainicial = tokens.get(index).getColumna();
 
     }
 
@@ -37,6 +47,7 @@ public class FuncionMetodo {
         while (index < tokens.size()) {
             if (Estructura()) {
                 //      System.out.println("Funcion Valido");
+                funcion = new Funciones(nombre, lineainical, columnainicial);
                 break;
             } else {
 
@@ -67,8 +78,16 @@ public class FuncionMetodo {
     }
 
     private boolean FuncionMetodo() {
-        if (match("def") && matchTT(TipoToken.Identificador) && (ExpresionParaetros() || ExpresionNOParaetros()) && matchTT(TipoToken.DosPuntos)) {
+        if (match("def") && Identificador() && (ExpresionParaetros() || ExpresionNOParaetros()) && matchTT(TipoToken.DosPuntos)) {
             BMetodo = true;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean Identificador() {
+        if (matchTT(TipoToken.Identificador)) {
+            nombre = tokens.get(index - 1).getLexeman();
             return true;
         }
         return false;
@@ -156,10 +175,19 @@ public class FuncionMetodo {
     private boolean Parametros() {
 
         if (matchTT(TipoToken.Identificador)) {
+            cantidadParametros++;
+            ParametrosFuncion parametro = new ParametrosFuncion(cantidadParametros, tokens.get(index-1).getLexeman());
+            ParametrosFuncion.add(parametro);
+
             while (matchTT(TipoToken.Coma)) {
                 if (!matchTT(TipoToken.Identificador)) {
+
                     return false;
                 }
+                cantidadParametros++;
+                ParametrosFuncion parametroo = new ParametrosFuncion(cantidadParametros, tokens.get(index-1).getLexeman());
+                ParametrosFuncion.add(parametroo);
+
             }
             return true;
         }
@@ -207,13 +235,19 @@ public class FuncionMetodo {
         return error;
     }
 
+    public Funciones getfuncion() {
+        return funcion;
+    }
+    public ArrayList<ParametrosFuncion> getParametrosFuncion(){
+    return ParametrosFuncion;
+    }
+
     private void BloqueCodigo() {
         if (index < tokens.size()) {
 
             if (tokens.get(index).getColumna() > columna) {
 
-           //     System.out.println("esta entrando a un bloque interno");
-
+                //     System.out.println("esta entrando a un bloque interno");
                 Sintactico sintactico = new Sintactico(tokens, tokens.get(index).getColumna(), index, true);
                 try {
                     errores.addAll(sintactico.analizar());

@@ -8,7 +8,10 @@ import AnalizadorLexico.ParserPy;
 import AnalizadorSintactico.*;
 import ModeloLexico.Token;
 import ModeloLexico.TipoToken;
+import ModeloSintactico.Funciones;
 import ModeloSintactico.ResultadoAnalisis;
+import Ventanas.Reportes.ErroresLexicos;
+import Ventanas.Reportes.ReporteFunciones;
 import java.awt.Color;
 
 import java.io.BufferedReader;
@@ -80,6 +83,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         Reportes = new javax.swing.JMenu();
         ErrorLexico = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -174,6 +178,14 @@ public class Principal extends javax.swing.JFrame {
         });
         Reportes.add(ErrorLexico);
 
+        jMenuItem6.setText("Cantidad de Funciones");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        Reportes.add(jMenuItem6);
+
         jMenuBar1.add(Reportes);
 
         setJMenuBar(jMenuBar1);
@@ -228,8 +240,9 @@ public class Principal extends javax.swing.JFrame {
     ArrayList<Token> ListaToken;
     ArrayList<Token> ListaErrores;
     ArrayList<Token> ListaGeneral;
-  ArrayList<ResultadoAnalisis> ErrorSintactico ;
-      
+    ArrayList<Funciones> funciones;
+    ArrayList<ResultadoAnalisis> ErrorSintactico;
+
 
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
 
@@ -240,6 +253,12 @@ public class Principal extends javax.swing.JFrame {
         if (ListaGeneral != null) {
             ListaGeneral.clear();
         }
+        if (ListaErrores != null) {
+            ListaErrores.clear();
+        }
+        if (funciones != null) {
+            funciones.clear();
+        }
 
         String Contenido = contenido2.getText();
 
@@ -249,48 +268,6 @@ public class Principal extends javax.swing.JFrame {
         ListaGeneral = analizador.getTokensGeneral();
         ListaErrores = analizador.getErrores();
 
-//        String Resultado="";
-//
-//        
-//            File archivo = new File(System.getProperty("user.dir")+"/src/main/java/Ventanas/archivo.txt");
-//        PrintWriter escribir;
-//        try {
-//            escribir = new PrintWriter(archivo);
-//            escribir.print(contenido2.getText());
-//            escribir.close();
-//        } catch (FileNotFoundException ex) {
-//        
-//        }
-//        
-//        try {
-//            Reader lector = new BufferedReader(new FileReader(System.getProperty("user.dir")+"/src/main/java/Ventanas/archivo.txt"));
-//            
-//            Lexico lexer = new Lexico(lector);
-//            String resultado = "";
-//            while (true) {
-//                Token tokens = lexer.yylex();
-//                if (tokens == null) {
-//                    resultado += "FIN";
-//                    errores.setText(resultado);
-//                    return;
-//                }
-//                if(tokens.getTipotoken()==TipoToken.Palabra_Reservada){
-//                    resultado+="Lexema:  " + tokens.getLexeman() + " TIpo de token " + tokens.getTipotoken() + " Linea " + tokens.getLinea() + " Columna: " + tokens.getColumna()+"\n";
-//                }
-//                if(tokens.getTipotoken()==TipoToken.Error){
-//                    resultado+="Lexema:  " + tokens.getLexeman() + " TIpo de token " + tokens.getTipotoken() + " Linea " + tokens.getLinea() + " Columna: " + tokens.getColumna()+"\n";
-//                }
-//                if(tokens.getTipotoken()==TipoToken.Identificador){
-//                    resultado+="Lexema:  " + tokens.getLexeman() + " TIpo de token " + tokens.getTipotoken() + " Linea " + tokens.getLinea() + " Columna: " + tokens.getColumna()+"\n";
-//                }
-//                
-//            }
-//        } catch (FileNotFoundException ex) {
-//        
-//        } catch (IOException ex) {
-//        
-//        }
-        //  System.out.println(Contenido);
         String imprimir = "";
 
         ArrayList<Token> ListaErrores = analizador.getErrores();
@@ -319,95 +296,27 @@ public class Principal extends javax.swing.JFrame {
             }
 
         }
-
-//        contenido2.setText("");
-//   
-//        
-//      
-//        
-//        for (Token token : ListaGeneral) {
-//    // Obtén el tipo de token y el lexema
-//    TipoToken tipoToken = token.getTipotoken();
-//    String lexema = token.getLexeman();
-//    
-//    // Define un estilo para el token actual
-//    
-//    // Configura el color del estilo según el tipo de token
-//    if (tipoToken == TipoToken.Identificador) {
-//        StyleConstants.setForeground(estilo, Color.BLACK);
-//    } else if (tipoToken == TipoToken.Palabra_Reservada) {
-//        StyleConstants.setForeground(estilo, Color.MAGENTA);
-//    } else if (tipoToken == TipoToken.Operador_Aritmetico || tipoToken == TipoToken.Operador_Comparacion || tipoToken == TipoToken.Operador_Logico) {
-//        StyleConstants.setForeground(estilo, Color.BLUE);
-//    } else if (tipoToken == TipoToken.Cadena || tipoToken == TipoToken.Entero || tipoToken == TipoToken.Decimal) {
-//        StyleConstants.setForeground(estilo, Color.ORANGE);
-//    } else if (tipoToken == TipoToken.Coma || tipoToken == TipoToken.PuntoComa || tipoToken == TipoToken.DosPuntos ||
-//               tipoToken == TipoToken.LlavesA || tipoToken == TipoToken.LlavesC || tipoToken == TipoToken.ParentesisA || 
-//               tipoToken == TipoToken.ParentesisC || tipoToken == TipoToken.CorchetesA || tipoToken == TipoToken.CorchetesC) {
-//        StyleConstants.setForeground(estilo, Color.GREEN);
-//    } else if (tipoToken == TipoToken.Comentario) {
-//        StyleConstants.setForeground(estilo, Color.GRAY);
-//    } else if (tipoToken == TipoToken.Error) {
-//        StyleConstants.setForeground(estilo, Color.RED);
-//    }
-//    
-//    // Inserta el lexema en el documento con el estilo aplicado
-//    try {
-//        doc.insertString(doc.getLength(), lexema, estilo);
-//    } catch (BadLocationException ex) {
-//        ex.printStackTrace();
-//    }
-//    
-//    // Añade saltos de línea según la posición del token
-//    int linea = token.getLinea();
-//    int columna = token.getColumna();
-//    
-//    // Calcula la cantidad de saltos de línea necesarios
-//    while (linea > 1) {
-//        try {
-//            doc.insertString(doc.getLength(), "\n", estilo);
-//        } catch (BadLocationException ex) {
-//            ex.printStackTrace();
-//        }
-//        linea--;
-//    }
-//    
-//    // Calcula la cantidad de espacios necesarios para la columna
-//    int espacios = columna - 1;
-//    StringBuilder espaciosStr = new StringBuilder();
-//    for (int i = 0; i < espacios; i++) {
-//        espaciosStr.append(" ");  // Carácter de espacio no rompible
-//    }
-//    
-//    // Inserta los espacios en blanco
-//    try {
-//        doc.insertString(doc.getLength(), espaciosStr.toString(), estilo);
-//    } catch (BadLocationException ex) {
-//        ex.printStackTrace();
-//    }
-//
-//    
-//        }
         // AsignacionDeclaracion sintactico = new AsignacionDeclaracion(ListaToken);
         //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
         // CicloWhile sintactico = new CicloWhile(ListaGeneral); 
         // CicloFor sintactico = new CicloFor(ListaGeneral);
-        Sintactico sintactico = new Sintactico(ListaGeneral, 1, 0,false);
+        Sintactico sintactico = new Sintactico(ListaGeneral, 1, 0, false);
         try {
-            
-        
-            
-          ErrorSintactico =  sintactico.analizar();
-        
-        for (ResultadoAnalisis tokenerror : ErrorSintactico) {
 
-            imprimir = imprimir + "\n " + tokenerror.toString();
+            ErrorSintactico = sintactico.analizar();
+            funciones = sintactico.getFunciones();
+            if(ErrorSintactico!=null){
+                
+            }
 
-            System.out.println(tokenerror.toString());
-        }
+            for (ResultadoAnalisis tokenerror : ErrorSintactico) {
+
+                imprimir = imprimir + "\n " + tokenerror.toString();
+
+                System.out.println(tokenerror.toString());
+            }
         } catch (Exception e) {
         }
-
 
 //        for(Token tokenerror: ListaGeneral){
 //            
@@ -473,8 +382,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void ErrorLexicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ErrorLexicoActionPerformed
-        // TODO add your handling code here:
+        ErroresLexicos ventana = new ErroresLexicos(ListaErrores);
+        ventana.setVisible(true);
+
+
     }//GEN-LAST:event_ErrorLexicoActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+
+        ReporteFunciones ventana = new ReporteFunciones(funciones);
+        ventana.setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -534,6 +454,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

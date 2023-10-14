@@ -7,6 +7,9 @@ package AnalizadorSintactico;
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
 import ModeloSintactico.ErrorSintactico;
+import ModeloSintactico.FuncionConParametros;
+import ModeloSintactico.Funciones;
+import ModeloSintactico.Instruccion;
 import ModeloSintactico.ResultadoAnalisis;
 import java.util.ArrayList;
 
@@ -18,6 +21,9 @@ public class Sintactico {
 
     private ArrayList<Token> tokens;
     private ArrayList<ResultadoAnalisis> errores;
+    private ArrayList<Funciones> funciones= new ArrayList<Funciones>();
+    private ArrayList<FuncionConParametros> funcionyParametros= new ArrayList<FuncionConParametros>();
+    
     private int index;
     private int columna;
     private boolean bloque;
@@ -32,6 +38,8 @@ public class Sintactico {
     }
 
     public ArrayList<ResultadoAnalisis> analizar() {
+        
+        
         boolean terminar = false;
         if (tokens.get(index).getColumna() != columna) {
             SiguienteLinea(true);
@@ -85,26 +93,63 @@ public class Sintactico {
 
                         } else {
                             if (tokens.get(index).getLexeman().equals("def")) {
-
+                                if(bloque){
+                                    SiguienteLinea(true);
+                                }else{
                                 FuncionMetodo funcion = new FuncionMetodo(tokens, index, columna);
                                 ArrayList<ResultadoAnalisis> analisis = new ArrayList<ResultadoAnalisis>();
                                 index = funcion.analizar();
 
                                 analisis = funcion.getAnalisis();
                                 AgregarArray(analisis);
+                                boolean errorfuncion =funcion.getError();
+                                if(!errorfuncion){
+                                    Funciones funcioncita =funcion.getfuncion(); 
+                                    FuncionConParametros  Parametros = new FuncionConParametros(funcioncita.getNombre(), funcion.getParametrosFuncion());
+                                    funcionyParametros.add(Parametros);
+                                funciones.add(funcioncita);
+                                
+                               
+                                
+                                }
+                                System.out.println("Cantidad de funciones: "+ funciones.size());
+                                System.out.println("Parametros Funcion: : "+ funcionyParametros.toString());
+                                
+                                
+                                SiguienteLinea(errorfuncion);
+                                
+                                
+                                
+                                
+                                }
 
-                                SiguienteLinea(funcion.getError());
+                                
 
                             } else {
                                 if (tokens.get(index).getTipotoken() == TipoToken.Identificador) {
                                     AsignacionDeclaracion asignacion = new AsignacionDeclaracion(tokens, index, columna);
                                     ArrayList<ResultadoAnalisis> analisis = new ArrayList<ResultadoAnalisis>();
-                                    index = asignacion.analizar();
-
+                                   int indexprovicional = asignacion.analizar();
+                                    
                                     analisis = asignacion.getAnalisis();
                                     AgregarArray(analisis);
 
-                                    SiguienteLinea(asignacion.getError());
+                                    boolean error =asignacion.getError();
+                                    if(error){
+                                        OperadorTernario ternario = new OperadorTernario(tokens,index,columna);
+                                  int indextemporal = ternario.analizar();
+                                  boolean errorternario=ternario.getError();
+                               
+                                  if(errorternario){
+                                    SiguienteLinea(error);
+                                  }else{
+                                  
+                                  index=indextemporal;
+                                  }
+                                    
+                                    }else{
+                                    index=indexprovicional;
+                                    }
 
                                 } else {
 
@@ -177,6 +222,9 @@ public class Sintactico {
 
     public ArrayList<ResultadoAnalisis> getErroresSintacticos() {
         return errores;
+    }
+    public ArrayList<Funciones> getFunciones(){
+    return funciones;
     }
 
     public void AgregarArray(ArrayList<ResultadoAnalisis> resultado) {
