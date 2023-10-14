@@ -1,61 +1,29 @@
 
-# simples
-if variable1 > 50:
-    resultado = "mayor"
+# condicional simple
+if True:
+    # Bloque de código
+    miVariable = "Verdadero"
 else:
-    resultado = "menor"
+    miVariable = "Falso"
 
-if texto == "Hola Mundo":
-    saludo = True
+# condicional anidado
+a = 5
+v = 8
+if a > v:
+    # Bloque de código
+    resultado = "a es mayor que v"
+elif a < v:
+    # Bloque de código
+    resultado = "a es menor que v"
 else:
-    saludo = False
+    resultado = "a es igual a v"
 
-if booleano:
-    estado = "Activo"
-else:
-    estado = "Inactivo"
+# ciclos
+for i in range(5):
+    print(i)
 
-if not lista_vacia:
-    lista_estado = "Lista está vacía"
-else:
-    lista_estado = "Lista no está vacía"
-
-if "clave" in diccionario:
-    clave_estado = "Clave existe"
-else:
-    clave_estado = "Clave no existe"
-
-
-
-# anidados 
-x = 15
-y = 20
-if x > y:
-    comparacion = "x es mayor que y"
-elif x < y:
-    comparacion = "x es menor que y"
-else:
-    comparacion = "x es igual a y"
-
-#ciclos
-for i in range(10, 15):
-    print(f"Número {i}")
-
-
-
-contador = 10
-while contador < 15:
-    print(f"Contador {contador}")
+contador = 0
+while contador < 5:
+    print(contador)
     contador += 1
 
-
-
-# funciones
-def multiplicar(a, b):
-    return a * b
-
-def dividir(a, b):
-    if b != 0:
-        return a / b
-    else:
-        return "No se puede dividir entre cero"
