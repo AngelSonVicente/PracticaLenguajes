@@ -96,7 +96,6 @@ True | False {return new Token(TipoToken.Boolean, yyline+1, yycolumn+1, yytext()
 ("-"?{D}+"."{D}+) | {D}+ {lexeme=yytext(); return new Token(TipoToken.Constante, yyline+1, yycolumn+1, lexeme);}
 
 ("\""([^\"\\\\]|\\\\.)*"\"") | ('([^'\\\\]|\\\\.)*') {lexeme=yytext(); return new Token(TipoToken.Cadena, yyline+1, yycolumn+1, lexeme);}
-("\""([^\"\\\\]|\\\\.)*"\n")|('[^'\\\\]*"\n") {lexeme=yytext(); return new Token(TipoToken.Error, yyline+1, yycolumn+1, lexeme);}
 
 
 ("#"[^\n]*) {lexeme=yytext(); return new Token(TipoToken.Comentario, yyline+1, yycolumn+1, lexeme);}

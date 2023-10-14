@@ -6,6 +6,8 @@ package AnalizadorSintactico;
 
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
+import ModeloSintactico.ErrorSintactico;
+import ModeloSintactico.ResultadoAnalisis;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,74 +16,82 @@ import java.util.List;
  * @author MSI
  */
 public class AsignacionDeclaracion {
-     
+
     private ArrayList<Token> tokens;
+       ArrayList<ResultadoAnalisis> errores = new ArrayList<ResultadoAnalisis>();
+
     private int index;
+    private int columna;
+    private boolean error=false;
 
-    public AsignacionDeclaracion(ArrayList<Token> tokens) {
+    public AsignacionDeclaracion(ArrayList<Token> tokens, int index, int ColumnaAnterior) {
         this.tokens = tokens;
-        this.index = 0;
+        this.index = index;
+        this.columna = tokens.get(index).getColumna();
+
     }
 
+    public int analizar() {
+      
+        while (index < tokens.size()) {
+            if (asignacionMultiple() || declaracion()) {
+        //        System.out.println("Asignación o declaración válida");
+                break;
+            } else {
+        //          System.out.println("Error de sintaxis en la posición: " + index);
+                ErrorSintactico errorsintactico = new ErrorSintactico("Error de sintaxis", tokens.get(index).getLinea(), tokens.get(index).getColumna());
+                ResultadoAnalisis analisis = new ResultadoAnalisis(index, errorsintactico);
+                errores.add(analisis);
+                error=true;
 
-    
-    
-
-public void analizar() {
-    while (index < tokens.size()) {
-        if (asignacionMultiple() || declaracion() ) {
-            System.out.println("Asignación o declaración válida");
-        } else {
-            System.out.println("Error de sintaxis en la posición: " + index);
-            break;
-        }
-    }
-}
-
-private boolean declaracion() {
-    if (match(TipoToken.Identificador) && match(TipoToken.Asignacion) && expresion()) {
-        return true;
-    }
-    return false;
-}
-
-private boolean asignacionMultiple() {
-    if (match(TipoToken.Identificador)) {
-        while (match(TipoToken.Coma)) {
-          
-            if (!match(TipoToken.Identificador)) {
-                return false;
+              
+                break;
             }
         }
+        return index;
+    }
 
-        if (match(TipoToken.Asignacion)) {
-            if (expresion()) {
-                while (match(TipoToken.Coma)) {
-             
-                    
-                    if (!expresion()) {
-                        return false;
-                    }
+    private boolean declaracion() {
+        if (match(TipoToken.Identificador) && match(TipoToken.Asignacion) && expresion()) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean asignacionMultiple() {
+        if (match(TipoToken.Identificador)) {
+            while (match(TipoToken.Coma)) {
+
+                if (!match(TipoToken.Identificador)) {
+                    return false;
                 }
-                return true;  
-                    
-                
+            }
+
+            if (match(TipoToken.Asignacion)) {
+                if (expresion()) {
+                    while (match(TipoToken.Coma)) {
+
+                        if (!expresion()) {
+                            return false;
+                        }
+                    }
+                    return true;
+
+                }
             }
         }
+
+        return false;
     }
-    
-    return false;
-}
-    
-    
-    
-       private boolean cadena() {
+
+    private boolean cadena() {
         if (match(TipoToken.Cadena)) {
             return true;
         }
         return false;
     }
-        private boolean arreglo() {
+
+    private boolean arreglo() {
         if (match(TipoToken.CorchetesA)) {
             if (elementos_arreglo()) {
                 return match(TipoToken.CorchetesC);
@@ -89,8 +99,8 @@ private boolean asignacionMultiple() {
         }
         return false;
     }
-        
-          private boolean elementos_arreglo() {
+
+    private boolean elementos_arreglo() {
         if (expresion()) {
             while (match(TipoToken.Coma)) {
                 if (!expresion()) {
@@ -102,8 +112,7 @@ private boolean asignacionMultiple() {
         return false;
     }
 
-
-        private boolean multiplicacion() {
+    private boolean multiplicacion() {
         if (match(TipoToken.Operador_Aritmetico) && match(TipoToken.Constante)) {
             return true;
         }
@@ -111,7 +120,7 @@ private boolean asignacionMultiple() {
     }
 
     private boolean expresion() {
-        return  cadena() || arreglo() || multiplicacion() || match(TipoToken.Constante )||match(TipoToken.Boolean);
+        return cadena() || arreglo() || multiplicacion() || match(TipoToken.Constante) || match(TipoToken.Boolean);
     }
 
     private boolean match(TipoToken tipoEsperado) {
@@ -121,5 +130,13 @@ private boolean asignacionMultiple() {
         }
         return false;
     }
+    
+    public ArrayList<ResultadoAnalisis> getAnalisis() {
+        return errores;
+    }
+    public boolean getError(){
+    return error;
+    }
+
 
 }

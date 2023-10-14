@@ -1,2 +1,15 @@
-def hola():
- return 1
+# funciones
+def multiplicar(a, b):
+    return a * b
+
+def dividir(a, b):
+    if b != 0:
+        return a / b
+    else:
+        return "No se puede dividir entre cero"
+
+def longitud_texto(texto):
+    return len(texto)
+
+def es_par(numero):
+    return numero % 2 == 0
