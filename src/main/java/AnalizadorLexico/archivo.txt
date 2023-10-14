@@ -1,29 +1,15 @@
+# funciones
+def multiplicar(a, b):
+    return a * b
 
-# condicional simple
-if True:
-    # Bloque de código
-    miVariable = "Verdadero"
-else:
-    miVariable = "Falso"
+def dividir(a, b):
+    if b != 0:
+        return a / b
+    else:
+        return "No se puede dividir entre cero"
 
-# condicional anidado
-a = 5
-v = 8
-if a > v:
-    # Bloque de código
-    resultado = "a es mayor que v"
-elif a < v:
-    # Bloque de código
-    resultado = "a es menor que v"
-else:
-    resultado = "a es igual a v"
+def longitud_texto(texto):
+    return len(texto)
 
-# ciclos
-for i in range(5):
-    print(i)
-
-contador = 0
-while contador < 5:
-    print(contador)
-    contador += 1
-
+def es_par(numero):
+    return numero % 2 == 0
