@@ -6,6 +6,8 @@ package AnalizadorSintactico;
 
 import ModeloLexico.TipoToken;
 import ModeloLexico.Token;
+import ModeloSintactico.ErrorSintactico;
+import ModeloSintactico.ResultadoAnalisis;
 import java.util.ArrayList;
 
 /**
@@ -15,22 +17,39 @@ import java.util.ArrayList;
 public class OperadorTernario {
 
     private ArrayList<Token> tokens;
+      ArrayList<ResultadoAnalisis> errores = new ArrayList<ResultadoAnalisis>();
     private int index;
+    private int columna;
+    private boolean error=false;
 
-    public OperadorTernario(ArrayList<Token> tokens) {
+
+    public OperadorTernario(ArrayList<Token> tokens, int index, int ColumnaAnterior) {
         this.tokens = tokens;
-        this.index = 0;
+        this.index = index;
+           this.columna = tokens.get(index).getColumna();
+
     }
 
-    public void analizar() {
+    public int analizar() {
+        ArrayList<ResultadoAnalisis> errores = new ArrayList<ResultadoAnalisis>();
+
         while (index < tokens.size()) {
             if (Opternario()) {
                 System.out.println("Operador ternario válido");
+                
+                
+                break;
             } else {
-                System.out.println("Error de sintaxis en la posición: " + index);
+                    System.out.println("Error de sintaxis en la posición: " + index);
+                ErrorSintactico errorsintactico = new ErrorSintactico("Error de sintaxis", tokens.get(index).getLinea(), tokens.get(index).getColumna());
+                ResultadoAnalisis analisis = new ResultadoAnalisis(index, errorsintactico);
+                errores.add(analisis);
+                error=true;
+
                 break;
             }
         }
+        return index;
     }
 
     private boolean Opternario() {
@@ -80,7 +99,7 @@ public class OperadorTernario {
 
         }
 
-        System.out.println("Expresion obtenida: " + tokens.get(index).getLexeman() + " Expresion Esperada: " + lexema);
+       // System.out.println("Expresion obtenida: " + tokens.get(index).getLexeman() + " Expresion Esperada: " + lexema);
         return false;
     }
 
@@ -89,9 +108,19 @@ public class OperadorTernario {
             index++;
             return true;
         }
-        System.out.println("Expresion obtenida: " + tokens.get(index).getTipotoken() + " Expresion Esperada: " + token);
+      //  System.out.println("Expresion obtenida: " + tokens.get(index).getTipotoken() + " Expresion Esperada: " + token);
 
         return false;
     }
+    
+    
+    public ArrayList<ResultadoAnalisis> getAnalisis() {
+        return errores;
+    }
+    
+    public boolean getError() {
+        return error;
+    }
+
 
 }
