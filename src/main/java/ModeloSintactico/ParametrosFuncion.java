@@ -38,7 +38,7 @@ public class ParametrosFuncion {
 
     @Override
     public String toString() {
-        return "ParametrosFuncion{" + "posicion=" + posicion + ", nombre=" + nombre + '}';
+        return "{" + "posicion=" + posicion + ", nombre=" + nombre + '}';
     }
      
     

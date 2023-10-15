@@ -10,6 +10,7 @@ import ModeloSintactico.ErrorSintactico;
 import ModeloSintactico.FuncionConParametros;
 import ModeloSintactico.Funciones;
 import ModeloSintactico.Instruccion;
+import ModeloSintactico.ParametrosFuncion;
 import ModeloSintactico.ResultadoAnalisis;
 import java.util.ArrayList;
 
@@ -191,11 +192,15 @@ public class Sintactico {
 
         }
 
-
+        
+   System.out.println("Bloque:" + bloque);
+     
         return errores;
     }
 
     private void SiguienteLinea(boolean error) {
+        if(index<tokens.size()){
+        
         int linea = tokens.get(index).getLinea();
         if (error) {
 
@@ -205,13 +210,18 @@ public class Sintactico {
             while (index < tokens.size()) {
 
                 index++;
+                if(index<tokens.size()){
                 if (tokens.get(index).getLinea() > linea) {
                     break;
 
                 }
 
+                }else{
+                break;
+                }
             }
 
+        }
         }
 
     }
@@ -221,25 +231,31 @@ public class Sintactico {
     }
 
     public ArrayList<ResultadoAnalisis> getErroresSintacticos() {
+                
+         System.out.println("Errores retornando en sintactiico");
+                    for (ResultadoAnalisis resultadoo : errores) {
+
+                System.out.println(resultadoo.toString());
+
+            }
         return errores;
     }
     public ArrayList<Funciones> getFunciones(){
     return funciones;
     }
+    public ArrayList<FuncionConParametros> getParametrosFunciones(){
+    
+    return funcionyParametros;
+    }
 
     public void AgregarArray(ArrayList<ResultadoAnalisis> resultado) {
-        try {
+        
+        if(!resultado.isEmpty()){
             errores.addAll(resultado);
-
-                    for (ResultadoAnalisis resultadoo : resultado) {
-
-                System.out.println(resultadoo.toString());
-
-            }
-
-        } catch (Exception e) {
-
         }
+        
+
+       
 
         
     }

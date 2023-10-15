@@ -8,9 +8,11 @@ import AnalizadorLexico.ParserPy;
 import AnalizadorSintactico.*;
 import ModeloLexico.Token;
 import ModeloLexico.TipoToken;
+import ModeloSintactico.FuncionConParametros;
 import ModeloSintactico.Funciones;
 import ModeloSintactico.ResultadoAnalisis;
 import Ventanas.Reportes.ErroresLexicos;
+import Ventanas.Reportes.ReporteFuncionParametros;
 import Ventanas.Reportes.ReporteFunciones;
 import java.awt.Color;
 
@@ -30,8 +32,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Element;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -76,6 +82,8 @@ public class Principal extends javax.swing.JFrame {
         TablaReporte = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         contenido2 = new javax.swing.JTextPane();
+        fila = new javax.swing.JLabel();
+        columna = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -84,6 +92,7 @@ public class Principal extends javax.swing.JFrame {
         Reportes = new javax.swing.JMenu();
         ErrorLexico = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
 
@@ -138,6 +147,23 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane3.setViewportView(TablaReporte);
 
         jScrollPane4.setViewportView(contenido2);
+        contenido2.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                contenido2.setEditable(true);
+                JTextPane source = (JTextPane) e.getSource();
+                int caretPosition = source.getCaretPosition();
+                Element root = source.getDocument().getDefaultRootElement();
+                int conteoFila = root.getElementIndex(caretPosition) + 1;
+                int conteoColumna = caretPosition - root.getElement(conteoFila - 1).getStartOffset() + 1;
+                fila.setText("Linea: " + (conteoFila - 1));
+                columna.setText("Columna: " + (conteoColumna - 1));
+            }
+        });
+
+        fila.setText("linea:");
+
+        columna.setText("columna:");
 
         jMenu2.setText("Archivo");
 
@@ -186,6 +212,14 @@ public class Principal extends javax.swing.JFrame {
         });
         Reportes.add(jMenuItem6);
 
+        jMenuItem7.setText("Parametro de funciones");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        Reportes.add(jMenuItem7);
+
         jMenuBar1.add(Reportes);
 
         setJMenuBar(jMenuBar1);
@@ -195,11 +229,11 @@ public class Principal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(394, 394, 394)
+                .addGap(391, 391, 391)
                 .addComponent(Correr)
-                .addGap(547, 547, 547))
+                .addGap(540, 540, 540))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -207,9 +241,17 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3)
-                .addGap(21, 21, 21))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3)
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(columna)
+                            .addComponent(fila))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,16 +260,19 @@ public class Principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Correr, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(110, 110, 110)
+                        .addComponent(fila)
+                        .addGap(18, 18, 18)
+                        .addComponent(columna)
+                        .addGap(48, 48, 48)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(93, 93, 93))
         );
@@ -242,6 +287,7 @@ public class Principal extends javax.swing.JFrame {
     ArrayList<Token> ListaGeneral;
     ArrayList<Funciones> funciones;
     ArrayList<ResultadoAnalisis> ErrorSintactico;
+    ArrayList<FuncionConParametros> FuncionesyParametros;
 
 
     private void CorrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CorrerActionPerformed
@@ -300,10 +346,19 @@ public class Principal extends javax.swing.JFrame {
         //   CondicionIF sintactico = new CondicionIF(ListaGeneral);
         // CicloWhile sintactico = new CicloWhile(ListaGeneral); 
         // CicloFor sintactico = new CicloFor(ListaGeneral);
+        
         Sintactico sintactico = new Sintactico(ListaGeneral, 1, 0, false);
+       
+        sintactico.analizar();
+        
+            if(!sintactico.getErroresSintacticos().isEmpty()){
+            ErrorSintactico= sintactico.getErroresSintacticos();
+            }
+        
+        
+            FuncionesyParametros = sintactico.getParametrosFunciones();
         try {
 
-            ErrorSintactico = sintactico.analizar();
             funciones = sintactico.getFunciones();
             if(ErrorSintactico!=null){
                 
@@ -396,6 +451,14 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+
+        ReporteFuncionParametros ventana = new ReporteFuncionParametros(FuncionesyParametros);
+
+        ventana.setVisible(true);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -438,8 +501,10 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ErrorLexico;
     private javax.swing.JMenu Reportes;
     private javax.swing.JTable TablaReporte;
+    private javax.swing.JLabel columna;
     private javax.swing.JTextPane contenido2;
     private javax.swing.JTextArea errores;
+    private javax.swing.JLabel fila;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -455,6 +520,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
