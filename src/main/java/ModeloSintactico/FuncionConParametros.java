@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -40,7 +40,7 @@ public class FuncionConParametros {
 
     @Override
     public String toString() {
-        return "FuncionConParametros{" + "nombre=" + nombre + ", parametros=" + parametros.toString() + '}';
+        return " parametros= {" + parametros.toString() + '}';
     }
     
     

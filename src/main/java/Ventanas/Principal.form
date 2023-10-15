@@ -100,6 +100,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem7">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Parametro de funciones"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem7ActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>
@@ -129,11 +137,11 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="394" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="391" max="-2" attributes="0"/>
               <Component id="Correr" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="547" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="540" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
@@ -144,9 +152,21 @@
                       <Component id="jScrollPane4" min="-2" pref="473" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane3" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="columna" min="-2" max="-2" attributes="0"/>
+                          <Component id="fila" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -158,17 +178,20 @@
                   <Component id="Correr" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="jScrollPane4" min="-2" pref="166" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="152" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="fila" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="columna" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="188" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -283,8 +306,21 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
         <Component class="javax.swing.JTextPane" name="contenido2">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="contenido2.addCaretListener(new CaretListener() {&#xa;            @Override&#xa;            public void caretUpdate(CaretEvent e) {&#xa;                contenido2.setEditable(true);&#xa;                JTextPane source = (JTextPane) e.getSource();&#xa;                int caretPosition = source.getCaretPosition();&#xa;                Element root = source.getDocument().getDefaultRootElement();&#xa;                int conteoFila = root.getElementIndex(caretPosition) + 1;&#xa;                int conteoColumna = caretPosition - root.getElement(conteoFila - 1).getStartOffset() + 1;&#xa;                fila.setText(&quot;Linea: &quot; + (conteoFila - 1));&#xa;                columna.setText(&quot;Columna: &quot; + (conteoColumna - 1));&#xa;    }&#xa; });"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="fila">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="linea:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="columna">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="columna:"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

@@ -39,24 +39,24 @@ public class CondicionIF {
         // System.out.println("entro al analizar del if ");
         while (index < tokens.size()) {
             if (Estructura()) {
-        //        System.out.println("IF Valido");
+                System.out.println("IF Valido");
                 //ResultadoAnalisis analisis = new ResultadoAnalisis(index, new ErrorSintactico("no hay",  tokens.get(index).getLinea(), tokens.get(index).getColumna()));
 
                 //      errores.add(analisis);
                 break;
             } else {
 
-         //       System.out.println("Error de sintaxis en la posición: " + index);
+                //       System.out.println("Error de sintaxis en la posición: " + index);
                 ErrorSintactico errorsintactico = new ErrorSintactico("Error de sintaxis", tokens.get(index).getLinea(), tokens.get(index).getColumna());
                 ResultadoAnalisis analisis = new ResultadoAnalisis(index, errorsintactico);
                 errores.add(analisis);
-                error=true;
+                error = true;
 
                 break;
             }
         }
 
-    //    System.out.println("Index Retornado: "+ index);
+        //    System.out.println("Index Retornado: "+ index);
         return index;
     }
 
@@ -174,7 +174,7 @@ public class CondicionIF {
             }
             return false;
         }
-           // System.out.println("Expresion obtenida: " + tokens.get(index).getLexeman() + " Expresion Esperada: " + lexema);
+        // System.out.println("Expresion obtenida: " + tokens.get(index).getLexeman() + " Expresion Esperada: " + lexema);
         return false;
     }
 
@@ -187,34 +187,37 @@ public class CondicionIF {
     }
 
     public ArrayList<ResultadoAnalisis> getAnalisis() {
+
+//        System.err.println("Errores: retornados: ");
+//        for (ResultadoAnalisis resultado : errores) {
+//
+//            System.out.println(resultado.toString());
+//
+//        }
         return errores;
     }
-    
+
     public boolean getError() {
         return error;
     }
 
     private void BloqueCodigo() {
-      
+        if (index < tokens.size()) {
+
             if (tokens.get(index).getColumna() > columna) {
 
-            //    System.out.println("esta entrando a un bloque interno");
+                System.out.println("esta entrando a un bloque interno");
 
-                Sintactico sintactico = new Sintactico(tokens, tokens.get(index).getColumna(), index,true);
+                Sintactico sintactico = new Sintactico(tokens, tokens.get(index).getColumna(), index, true);
                 try {
                     errores.addAll(sintactico.analizar());
-//                      for (ResultadoAnalisis resultado : errores) {
-//
-//                                        System.out.println(resultado.toString());
-//
-//                                    }
 
                 } catch (Exception e) {
                 }
-                index=sintactico.getIndex();
+                index = sintactico.getIndex();
 
             }
-        
+        }
 
     }
 
